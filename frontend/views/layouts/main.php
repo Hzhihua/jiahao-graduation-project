@@ -1,81 +1,63 @@
 <?php
-
+/**
+ * @Author: Hzhihua
+ * @Time: 2017/10/20 15:24
+ * @Email: cnzhihua@gmail.com
+ */
 /* @var $this \yii\web\View */
 /* @var $content string */
-
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use frontend\assets\AppAsset;
-use common\widgets\Alert;
+use yii\widgets\Pjax;
+use frontend\components\nprogress\NProgressAsset;
 
-AppAsset::register($this);
+NProgressAsset::register($this); // show pjax progress at the top
+
+$directoryAsset = Yii::$app->assetManager->getPublishedUrl('@frontend/views/layouts');
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
+    <meta name=renderer content=webkit>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+
+<body id="blog-article-sidebar">
 <?php $this->beginBody() ?>
-
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+    <?php Pjax::begin([
+        'timeout' => 30000, // 设置ajax请求超时时间（ms）
+        // 'linkSelector' => 'a[data-pjax!=0]',
+        'formSelector' => 'form',
+        'clientOptions' => [
+            // 'cache' => false, // 解决ie缓存问题 在url请求地址中添加"_=123456"参数
+            'container' => '#pjax-container', // 容器，这里的所有内容会被ajax请求的内容替换
+            // 'fragment' => 'section.content', // 片段，从请求的内容中提取<section class="content">内容替换掉container中的内容(这里是：#pjax-container)
         ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
-    if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
-    } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
-    }
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
+    ]); ?>
 
-    <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+    <?= $this->render(
+        'nav.php',
+        ['directoryAsset' => $directoryAsset]
+    ) ?>
+
+    <div class="content-wrapper" id="pjax-container">
+        <?= $this->render(
+            'content.php',
+            ['content' => $content, 'directoryAsset' => $directoryAsset]
+        );?>
     </div>
-</div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+    <?php Pjax::end(); ?>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
-    </div>
-</footer>
+    <?= $this->render(
+        'footer.php',
+        ['directoryAsset' => $directoryAsset]
+    ) ?>
 
 <?php $this->endBody() ?>
 </body>

@@ -33,3 +33,9 @@ phpunit.phar
 
 # vagrant runtime
 /.vagrant
+
+#docs
+/docs
+
+#frontend_template
+/frontend_template
