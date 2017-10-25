@@ -4,6 +4,7 @@
  * @Time: 2017/10/20 15:38
  * @Email: cnzhihua@gmail.com
  */
+/* @var array $data*/
 use yii\helpers\Url;
 use frontend\assets\AppAsset;
 
@@ -12,7 +13,9 @@ AppAsset::register($this);
 $page = Yii::$app->getRequest()->get('page');
 $page = (int)$page < 1 ? 1 : $page;
 $params = Yii::$app->params;
-$rootDir = rtrim($params['uploadFileRoot'], '/') . '/';
+$rootDir = rtrim($params['uploadPictureRoot'], '/') . '/';
+
+$this->title = 'Proteus -- 嘉应学院';
 ?>
 
 <!-- banner start -->
@@ -21,7 +24,7 @@ $rootDir = rtrim($params['uploadFileRoot'], '/') . '/';
         <ul class="am-slides">
             <?php foreach ($data['rollingMap'] as $rollingMap): ?>
                 <li>
-                    <img width="1170" height="529" src="<?= $rootDir . $rollingMap['picture']['url']; ?>">
+                    <img src="<?= $rootDir . $rollingMap['picture']['url']; ?>">
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -60,20 +63,18 @@ $rootDir = rtrim($params['uploadFileRoot'], '/') . '/';
 
     <div class="am-u-md-4 am-u-sm-12 blog-sidebar">
         <div class="blog-sidebar-widget blog-bor">
-            <h2 class="blog-text-center blog-title"><span>About ME</span></h2>
-            <img src="assets/i/f14.jpg" alt="about me" class="blog-entry-img" >
-            <p>妹纸</p>
-            <p>
-                我是妹子UI，中国首个开源 HTML5 跨屏前端框架
-            </p><p>我不想成为一个庸俗的人。十年百年后，当我们死去，质疑我们的人同样死去，后人看到的是裹足不前、原地打转的你，还是一直奔跑、走到远方的我？</p>
+            <h2 class="blog-text-center blog-title"><span>Proteus</span></h2>
+            <img src="images/i/proteus.gif" alt="about me" class="blog-entry-img" >
+            <p style="text-indent: 2em">
+                Proteus是英国著名的EDA工具(仿真软件)，从原理图布图、代码调试到单片机与外围电路协同仿真，一键切换到PCB设计，真正实现了从概念到产品的完整设计。是目前世界上唯一将电路仿真软件、PCB设计软件和虚拟模型仿真软件三合一的设计平台，其处理器模型支持8051、HC11、PIC10/12/16/18/24/30/DsPIC33、AVR、ARM、8086和MSP430等，2010年又增加了Cortex和DSP系列处理器，并持续增加其他系列处理器模型。在编译方面，它也支持IAR、Keil和MPLAB等多种编译器。
+            </p>
         </div>
         <div class="blog-sidebar-widget blog-bor">
-            <h2 class="blog-title"><span>么么哒</span></h2>
+            <h2 class="blog-title"><span>友情链接</span></h2>
             <ul class="am-list">
-                <li><a href="#">每个人都有一个死角， 自己走不出来，别人也闯不进去。</a></li>
-                <li><a href="#">我把最深沉的秘密放在那里。</a></li>
-                <li><a href="#">你不懂我，我不怪你。</a></li>
-                <li><a href="#">每个人都有一道伤口， 或深或浅，盖上布，以为不存在。</a></li>
+                <?php foreach ($data['links'] as $link): ?>
+                    <li><a href="<?= $link['url']; ?>" target="_blank"><?= $link['name']; ?></a></li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </div>

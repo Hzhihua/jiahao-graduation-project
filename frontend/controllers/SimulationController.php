@@ -7,8 +7,11 @@
 
 namespace frontend\controllers;
 
+use Yii;
+use common\models\File;
 use common\models\Simulation;
 use yii\web\Controller;
+use yii\web\Response;
 
 class SimulationController extends Controller
 {
@@ -23,6 +26,20 @@ class SimulationController extends Controller
         return $this->render('index', [
             'data' => $data,
         ]);
+    }
+
+    /**
+     * 下载文件
+     * @param int $file 文件ID
+     * @return Response
+     */
+    public function actionDownload($file)
+    {
+        $params = Yii::$app->params;
+        $file = File::findOne($file);
+        $host = dirname($_SERVER['DOCUMENT_URI']) === '/' ? '' : dirname($_SERVER['DOCUMENT_URI']);
+        $url = $host . '/' . $params['uploadFileRoot'] . '/' . $file->url;
+        return Yii::$app->getResponse()->redirect($url, 302);
     }
 
     /**

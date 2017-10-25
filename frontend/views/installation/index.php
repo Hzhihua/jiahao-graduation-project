@@ -9,6 +9,7 @@
 use frontend\assets\AppAsset;
 
 AppAsset::register($this);
+$this->title = '安装指南';
 ?>
 
 <!-- content srart -->

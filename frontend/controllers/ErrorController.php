@@ -6,15 +6,27 @@ use yii\web\Controller;
 /**
  * Site controller
  */
-class SiteController extends Controller
+class ErrorController extends Controller
 {
+
+    public function beforeAction($action)
+    {
+        if (! parent::beforeAction($action)) {
+            return false;
+        }
+
+        $this->layout = 'error';
+
+        return true;
+    }
+
     /**
      * @inheritdoc
      */
     public function actions()
     {
         return [
-            'error' => [
+            'index' => [
                 'class' => 'yii\web\ErrorAction',
             ],
         ];

@@ -57,6 +57,7 @@ class UploadWorks
             $session = Yii::$app->session;
             $session['file'] = [
                 'name' => $post['originFileName'],
+                'size' => $session['file']['size'] + $_FILES['files']['size'],
                 'url' => $dir . $fileName .'.'. $ext,
             ];
             return $_FILES['files']['size'] ? $_FILES['files']['size'] : 0;  // 进度条数据

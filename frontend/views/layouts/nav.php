@@ -48,12 +48,12 @@ $weekDay = '星期' . $weekArray[date('w')];
 
     <div class="am-collapse am-topbar-collapse" id="blog-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li <?= isset($select[0]) ? $select[0] : ''; ?>><a href="<?= Url::home() ?>" data-pjax = 0>首页</a></li>
-            <li <?= isset($select[1]) ? $select[1] : ''; ?>><a href="<?= Url::to(['/introduction/index'])?>">简介</a></li>
-            <li <?= isset($select[2]) ? $select[2] : ''; ?>><a href="<?= Url::to(['/installation/index'])?>">安装指南</a></li>
-            <li <?= isset($select[3]) ? $select[3] : ''; ?>><a href="<?= Url::to(['/simulation/index'])?>">电子仿真模块</a></li>
-            <li <?= isset($select[4]) ? $select[4] : ''; ?>><a href="<?= Url::to(['/environment/index'])?>">设备环境</a></li>
-            <li <?= isset($select[5]) ? $select[5] : ''; ?>><a href="<?= Url::to(['/upload-works/index'])?>">作业提交</a></li>
+            <li <?= !isset($select[0]) ?: $select[0]; ?>><a href="<?= Url::home() ?>" data-pjax = 0>首页</a></li>
+            <li <?= !isset($select[1]) ?: $select[1]; ?>><a href="<?= Url::to(['/introduction/index'])?>">简介</a></li>
+            <li <?= !isset($select[2]) ?: $select[2]; ?>><a href="<?= Url::to(['/installation/index'])?>">安装指南</a></li>
+            <li <?= !isset($select[3]) ?: $select[3]; ?>><a href="<?= Url::to(['/simulation/index'])?>">电子仿真模块</a></li>
+            <li <?= !isset($select[4]) ?: $select[4]; ?>><a href="<?= Url::to(['/environment/index'])?>">设备环境</a></li>
+            <li <?= !isset($select[5]) ?: $select[5]; ?>><a href="<?= Url::to(['/upload-works/index'])?>">作业提交</a></li>
         </ul>
         <div class="am-topbar-form am-topbar-right am-form-inline" style="text-align: center">
             <span><?= date('Y-m-d') .' '. $weekDay ?></span>

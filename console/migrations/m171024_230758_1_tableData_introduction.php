@@ -20,7 +20,7 @@ class m171024_230758_1_tableData_introduction extends Migration
         $this->batchInsert('{{%introduction}}', 
             ['id', 'title', 'content', 'author_id', 'created_at', 'updated_at'], 
             [
-                ['1', '我的文章哎', '<img src="assets/i/f17.jpg" alt="" class="blog-entry-img blog-article-margin">
+                ['1', '我的文章哎', '<img src="images/i/f17.jpg" alt="" class="blog-entry-img blog-article-margin">
 <p>
     炊烟 <br/>
  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;／阿城 <br/><br/>

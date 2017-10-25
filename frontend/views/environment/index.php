@@ -9,6 +9,7 @@
 use frontend\assets\AppAsset;
 
 AppAsset::register($this);
+$this->title = '设备环境';
 ?>
 
 <!-- content srart -->

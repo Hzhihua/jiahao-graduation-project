@@ -49,14 +49,17 @@ class UploadWorksController extends Controller
         $params = Yii::$app->params;
         $session = Yii::$app->session;
         $rootDir = rtrim($params['uploadFileRoot'], '/') . '/';
-        $file = isset($session['file']) ? $rootDir . $session['file'] : null; // /frontend/web/uploads
+        $file = isset($session['file']) ? $rootDir . $session['file']['url'] : null; // /frontend/web/uploads
 
         // 每次刷新页面删除上一次未上传完的文件
         UploadWorks::removeUploadFile($file);
+        $message = $session['message']; // 判断表单是否提交成功
         $session['file'] = null;
+        $session['message'] = null;
 
         $studentClass = StudentClass::find()->asArray()->all();
         return $this->render('index', [
+            'message' => $message,
             'studentClass' => $studentClass,
         ]);
     }
@@ -93,6 +96,11 @@ class UploadWorksController extends Controller
         $session = Yii::$app->session;
         $file = $session['file'];
 
+        if (empty($file)) {
+            $session['message'] =  'alert("请选择要提交的文件")>';
+            return $this->redirect(['index']);
+        }
+
         $transaction = Yii::$app->getDb()->beginTransaction();
         try {
             $fileModel = new File();
@@ -119,6 +127,7 @@ class UploadWorksController extends Controller
         }
 
         $session['file'] = null;
+        $session['message'] = 'alert("提交成功")'; // 判断表单是否提交成功
         return $this->redirect(['index']);
     }
 }

@@ -4,6 +4,7 @@
  * @Time: 2017/10/20 16:54
  * @Email: cnzhihua@gmail.com
  */
+/* @var string $message */
 /* @var $this \yii\web\View*/
 /* @var array $studentClass */
 use yii\helpers\Url;
@@ -11,6 +12,7 @@ use frontend\assets\UploadWorksAsset;
 
 // 注册静态文件
 UploadWorksAsset::register($this);
+$this->title = '作业提交';
 
 $params = Yii::$app->params;
 $ext = implode($params['uploadFileExtension'], '/');
@@ -29,6 +31,9 @@ $(function(){
     });
 });
 JS;
+
+// 显示一个额外的信息，如提交成功，上传文件未选择
+$js .= $message;
 
 // 注册js
 $this->registerJs($js);

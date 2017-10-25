@@ -31,6 +31,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@frontend/views/layo
 <?php $this->beginBody() ?>
     <?php Pjax::begin([
         'timeout' => 30000, // 设置ajax请求超时时间（ms）
+        // 'scrollTo' => 0,
         // 'linkSelector' => 'a[data-pjax!=0]',
         'formSelector' => 'form',
         'clientOptions' => [

@@ -9,6 +9,7 @@
 use frontend\assets\AppAsset;
 
 AppAsset::register($this);
+$this->title = '公告详情';
 ?>
 
 <!-- content srart -->

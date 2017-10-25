@@ -77,10 +77,11 @@ class Picture extends BaseModel
         }
 
         $params = Yii::$app->params;
-        $params['uploadFileRoot'] = rtrim($params['uploadFileRoot'], '/');
-        $file = $params['uploadFileRoot'] . DIRECTORY_SEPARATOR . $this->url;
-        if (! is_file($file)) {
-            throw new Exception('File could not be found at \''.$file.'\'');
+        $params['uploadPictureRoot'] = rtrim($params['uploadPictureRoot'], '/');
+        $picture = $this->url ? $this->url : $params['uploadPictureRoot'];
+        $picture = $params['uploadPictureRoot'] . DIRECTORY_SEPARATOR . $picture;
+        if (! is_file($picture)) {
+            throw new Exception('Picture could not be found at \''.$picture.'\'');
         }
 
         return $event->isValid;
@@ -99,10 +100,11 @@ class Picture extends BaseModel
         }
 
         $params = Yii::$app->params;
-        $params['uploadFileRoot'] = rtrim($params['uploadFileRoot'], '/');
-        $file = $params['uploadFileRoot'] . DIRECTORY_SEPARATOR . $this->url;
-        if (! is_file($file)) {
-            throw new Exception('File could not be found at \''.$file.'\'');
+        $params['uploadPictureRoot'] = rtrim($params['uploadPictureRoot'], '/');
+        $picture = $this->url ? $this->url : $params['uploadPictureRoot'];
+        $picture = $params['uploadPictureRoot'] . DIRECTORY_SEPARATOR . $picture;
+        if (! is_file($picture)) {
+            throw new Exception('Picture could not be found at \''.$picture.'\'');
         }
 
         return $event->isValid;

@@ -35,7 +35,7 @@ return [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'error/index',
         ],
         'assetManager' => [
 //            'basePath' => '@webroot',
@@ -55,14 +55,24 @@ return [
                 ],
             ],
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'suffix' => '.html',
+            'enableStrictParsing' => true,
             'rules' => [
+                '/' => 'index/index',
+                'int' => 'introduction/index',
+                'ins' => 'installation/index',
+                'sim' => 'simulation/index',
+                'env' => 'environment/index',
+                'upl' => 'upload-works/index',
+                'ann/<pk:\d+>' => 'announcement/index',
+                '<controller>/<pk:\d+>' => '<controller>/index',
+                '<controller>/<action>' => '<controller>/<action>',
             ],
         ],
-        */
+
     ],
     'params' => $params,
     'as PjaxBehaviours' => 'frontend\behaviours\PjaxBehaviours',

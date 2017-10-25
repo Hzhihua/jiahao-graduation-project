@@ -7,6 +7,7 @@
 
 namespace frontend\controllers;
 
+use common\models\Links;
 use Yii;
 use common\models\Announcement;
 use common\models\RollingMap;
@@ -27,11 +28,13 @@ class IndexController extends Controller
      */
     public function actionIndex()
     {
-        $picture = $this->getRollingMap();
-        $announcement = $this->getAnnouncement(Yii::$app->getRequest()->get('page'));
+        $links = self::getLinks();
+        $picture = self::getRollingMap();
+        $announcement = self::getAnnouncement(Yii::$app->getRequest()->get('page'));
 
         return $this->render('index', [
             'data' => [
+                'links' => $links,
                 'rollingMap' => $picture, // 轮播图
                 'announcement' => $announcement,
             ],
@@ -42,7 +45,7 @@ class IndexController extends Controller
      * 获取轮播图
      * @return array|\yii\db\ActiveRecord[]
      */
-    public function getRollingMap()
+    public static function getRollingMap()
     {
         return RollingMap::find()->orderBy(['updated_at' => SORT_DESC])->limit(5)->with('picture')->asArray()->all();
     }
@@ -52,7 +55,7 @@ class IndexController extends Controller
      * @param $page
      * @return array|\yii\db\ActiveRecord[]
      */
-    public function getAnnouncement($page)
+    public static function getAnnouncement($page)
     {
         $page = (int)$page < 1 ? 1 : $page;
         $offset = ($page - 1) * 7;
@@ -61,46 +64,12 @@ class IndexController extends Controller
         return Announcement::find()->orderBy(['updated_at' => SORT_DESC])->offset($offset)->limit($end)->with('author', 'picture')->asArray()->all();
     }
 
-    public function actionCreate()
+    /**
+     * 获取友情链接
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public static function getLinks()
     {
-
-        $model = new Announcement();
-        $_POST['Announcement']['id'] = 3;
-        $_POST['Announcement']['title'] = '这是标题';
-        $_POST['Announcement']['author_id'] = '1';
-        $_POST['Announcement']['picture_id'] = '1';
-        $_POST['Announcement']['description'] = '这是描述';
-        $_POST['Announcement']['content'] = '这是内容';
-        $_POST['Announcement']['created_at'] = 'asdhaoisd';
-        $_POST['Announcement']['updated_at'] = 'fasqwsd';
-
-        if ($model->load($_POST) && $model->save()) {
-            echo '1';
-        } else {
-            echo '0';
-            var_dump($model->getErrors());
-        }
-    }
-
-    public function actionUpdate()
-    {
-
-        $model = new Announcement();
-        $_POST['Announcement']['id'] = 3;
-        $_POST['Announcement']['title'] = '这是标题';
-        $_POST['Announcement']['author_id'] = '1';
-        $_POST['Announcement']['picture_id'] = '1';
-        $_POST['Announcement']['description'] = '这是描述';
-        $_POST['Announcement']['content'] = '这是内容';
-        $_POST['Announcement']['created_at'] = 'asdfi';
-        $_POST['Announcement']['updated_at'] = 'asdfui1';
-
-        $model->oldAttributes = ['id' => 3, 'title' => '123'];
-        if ($model->load($_POST) && $model->save()) {
-            echo '1';
-        } else {
-            echo '0';
-            var_dump($model->getErrors());
-        }
+        return Links::find()->orderBy(['updated_at' => SORT_DESC])->asArray()->all();
     }
 }

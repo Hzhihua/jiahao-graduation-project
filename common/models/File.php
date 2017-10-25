@@ -33,7 +33,8 @@ class File extends BaseModel
     public function rules()
     {
         return [
-            [['name', 'url', 'created_at', 'updated_at'], 'required'],
+            [['name', 'url', 'size', 'created_at', 'updated_at'], 'required'],
+            [['size'], 'integer'],
             [['created_at', 'updated_at'], 'integer'],
             [['name', 'url'], 'string', 'max' => 255],
         ];
@@ -47,10 +48,12 @@ class File extends BaseModel
         return array_merge(Model::scenarios(), [
             'insert' => [
                 'name',
+                'size',
                 'url',
             ],
             'update' => [
                 'name',
+                'size',
                 'url',
             ],
         ]);
@@ -86,6 +89,11 @@ class File extends BaseModel
         $params = Yii::$app->params;
         $params['uploadFileRoot'] = rtrim($params['uploadFileRoot'], '/');
         $file = $params['uploadFileRoot'] . DIRECTORY_SEPARATOR . $this->url;
+
+        if (empty($this->size)) {
+            throw new Exception('File size is zero Bytes at \'' . $file . '\'');
+        }
+
         if (! is_file($file)) {
             throw new Exception('File could not be found at \'' . $file . '\'');
         }
