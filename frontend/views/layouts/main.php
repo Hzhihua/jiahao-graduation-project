@@ -29,6 +29,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@frontend/views/layo
 
 <body id="blog-article-sidebar">
 <?php $this->beginBody() ?>
+    <div style="min-height: 80%">
     <?php Pjax::begin([
         'timeout' => 30000, // 设置ajax请求超时时间（ms）
         // 'scrollTo' => 0,
@@ -54,6 +55,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@frontend/views/layo
     </div>
 
     <?php Pjax::end(); ?>
+    </div>
 
     <?= $this->render(
         'footer.php',

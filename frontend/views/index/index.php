@@ -56,8 +56,8 @@ $this->title = 'Proteus -- 嘉应学院';
         <?php endforeach; ?>
 
         <ul class="am-pagination">
-            <li class="am-pagination-prev"><a href="<?= Url::to(['index', 'page' => $page - 1])?>">&laquo; Prev</a></li>
-            <li class="am-pagination-next"><a href="<?= Url::to(['index', 'page' => $page + 1])?>">Next &raquo;</a></li>
+            <li class="am-pagination-prev"><a href="<?= Url::to(['index', 'page' => $page - 1])?>">&laquo; 上一页</a></li>
+            <li class="am-pagination-next"><a href="<?= Url::to(['index', 'page' => $page + 1])?>">下一页 &raquo;</a></li>
         </ul>
     </div>
 

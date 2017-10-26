@@ -5,7 +5,7 @@
  * @Email: cnzhihua@gmail.com
  */
 /* @var array $data */
-
+use yii\helpers\Html;
 use frontend\assets\AppAsset;
 
 AppAsset::register($this);
@@ -24,7 +24,7 @@ $this->title = '设备环境';
                 </p>
             </div>
             <div class="am-article-bd">
-                <?= $data['content'] ?>
+                <?= Html::decode($data['content']) ?>
             </div>
         </article>
 
