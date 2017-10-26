@@ -75,3 +75,9 @@ php requirements.php
 ./init
 init.bat(windows)
 ```
+### step4 数据迁移(migrate)
+需先配置数据库信息 *common/config/main-local.php*
+```
+./yii migrate
+yii.bat migrate(windows)
+```
