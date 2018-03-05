@@ -57,9 +57,10 @@ class IndexController extends Controller
      */
     public static function getAnnouncement($page)
     {
+        $paseSize = Yii::$app->params['AnnouncementPageSize'];
         $page = (int)$page < 1 ? 1 : $page;
-        $offset = ($page - 1) * 7;
-        $end = $page * 7;
+        $offset = ($page - 1) * $paseSize;
+        $end = $page * $paseSize;
 
         return Announcement::find()->orderBy(['updated_at' => SORT_DESC])->offset($offset)->limit($end)->with('author', 'picture')->asArray()->all();
     }

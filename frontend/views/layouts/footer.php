@@ -10,6 +10,5 @@ use yii\helpers\Url;
 ?>
 
 <footer class="blog-footer">
-    <div class="blog-text-center">© 2017-<?= date('Y')?> <a href="<?= Url::to(['index/index'])?>" style="text-decoration: underline">嘉应学院Protues教学网站</a> PowerBy
-        <a href="http://blog.hzhihua.top" target="_blank">黄志华</a>-苏沛云</div>
+    <div class="blog-text-center">© 2017-<?= date('Y')?> <a href="<?= Url::to(['index/index'])?>" style="text-decoration: underline">嘉应学院Protues教学网站</a>
 </footer>

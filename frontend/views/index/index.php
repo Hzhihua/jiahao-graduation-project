@@ -7,6 +7,7 @@
 /* @var array $data*/
 use yii\helpers\Url;
 use frontend\assets\AppAsset;
+use common\models\Announcement;
 
 AppAsset::register($this);
 
@@ -14,6 +15,8 @@ $page = Yii::$app->getRequest()->get('page');
 $page = (int)$page < 1 ? 1 : $page;
 $params = Yii::$app->params;
 $rootDir = rtrim($params['uploadPictureRoot'], '/') . '/';
+
+$hasNext = ((int) Announcement::find()->count() - ((int) $page * (int) Yii::$app->params['AnnouncementPageSize'])) > 0 ? true : false;
 
 $this->title = 'Proteus -- 嘉应学院';
 ?>
@@ -32,7 +35,7 @@ $this->title = 'Proteus -- 嘉应学院';
 </div>
 <!-- banner end -->
 
-<!-- content srart -->
+<!-- content start -->
 <div class="am-g am-g-fixed blog-fixed">
     <div class="am-u-md-8 am-u-sm-12">
 
@@ -50,14 +53,23 @@ $this->title = 'Proteus -- 嘉应学院';
                         mb_substr($announcement['description'], 0, 60, 'utf-8') . '...' :
                         $announcement['description'];
                 ?></p>
-                <p><a href="<?= Url::to(['announcement/index', 'pk' => $announcement['id']])?>" class="blog-continue">阅读全文</a></p>
+                <p><a href="<?= Url::to(['announcement/index', 'pk' => $announcement['id']])?>" class="blog-continue"><?= Yii::t('frontend', 'Read More') ?></a></p>
             </div>
         </article>
         <?php endforeach; ?>
 
         <ul class="am-pagination">
-            <li class="am-pagination-prev"><a href="<?= Url::to(['index', 'page' => $page - 1])?>">&laquo; 上一页</a></li>
-            <li class="am-pagination-next"><a href="<?= Url::to(['index', 'page' => $page + 1])?>">下一页 &raquo;</a></li>
+            <?php if ($page > 1): ?>
+            <li class="am-pagination-prev">
+                <a data-pjax=0 href="<?= Url::to(['index', 'page' => $page - 1])?>">&laquo; 上一页</a>
+            </li>
+            <?php endif; ?>
+
+            <?php if ($hasNext): ?>
+            <li class="am-pagination-next">
+                <a data-pjax=0 href="<?= Url::to(['index', 'page' => $page + 1])?>">下一页 &raquo;</a>
+            </li>
+            <?php endif; ?>
         </ul>
     </div>
 

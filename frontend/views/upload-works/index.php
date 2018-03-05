@@ -18,15 +18,17 @@ $params = Yii::$app->params;
 $ext = implode($params['uploadFileExtension'], '/');
 $url = Url::to(['/upload-works/upload']);
 $_csrf = Yii::$app->getRequest()->csrfToken;
+$tip = Yii::t('frontend', 'Select or Drag file to upload');
+$uploadTip = Yii::t('frontend', 'Exceeded file upload limit');
 $js = <<<JS
 $(function(){
     $('#upload').html5SliceUpload({
       ajax_timeout: 60000,
       url:'{$url}',
       _csrf: '{$_csrf}',
-      buttonText:'选择/拖拽文件上传({$ext})',
+      buttonText:'{$tip}({$ext})',
       onNumEnough: function(num){
-        alert('超过文件上传数量限制: '+num);
+        alert('{$uploadTip}: '+num);
       }
     });
 });
@@ -40,16 +42,16 @@ $this->registerJs($js);
 
 ?>
 
-<!-- content srart -->
+<!-- content start -->
 <div class="am-g am-g-fixed blog-fixed blog-content">
     <div class="am-u-sm-12">
         <article class="am-article blog-article-p">
             <form action="<?= Url::to(['/upload-works/post']) ?>" method="post">
                 <input type="hidden" name="<?= Yii::$app->getRequest()->csrfParam ?>" value="<?= Yii::$app->getRequest()->csrfToken ?>">
-                姓名：<input type="text" name="form[student_name]"><br />
-                班级：
+                <?= Yii::t('frontend', 'Student\'s Name') ?>：<input type="text" name="form[student_name]"><br />
+                <?= Yii::t('frontend', 'Class') ?>：
                 <select name="form[student_class_id]">
-                    <option value="">请选择班级</option>
+                    <option value=""><?= Yii::t('frontend', 'Please select a class') ?></option>
                     <?php foreach ($studentClass as $value): ?>
                         <option value="<?= $value['id']; ?>"><?= $value['class_name']; ?></option>
                     <?php endforeach; ?>
@@ -58,7 +60,7 @@ $this->registerJs($js);
                 <div class="am-article-hd">
                     <div id="dropFile"><div id="upload"></div></div>
                     <ol id="showFileList"></ol>
-                    <input type="submit" value="上传时禁用">
+                    <input type="submit" value="提交">
                 </div>
             </form>
         </article>

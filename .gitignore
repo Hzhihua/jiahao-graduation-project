@@ -39,3 +39,6 @@ phpunit.phar
 
 #frontend_template
 /frontend_template
+
+# composer.lock
+/composer.lock

@@ -33,7 +33,7 @@ $this->registerJs($js);
 
 ?>
 
-<!-- content srart -->
+<!-- content start -->
 <div class="am-g am-g-fixed blog-fixed blog-content">
     <div class="am-u-sm-12">
         <h1 class="blog-text-center">-- 电子仿真模块 --</h1>
