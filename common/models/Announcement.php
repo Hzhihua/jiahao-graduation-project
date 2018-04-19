@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Yii;
 use yii\base\Model;
 use PDOException;
 
@@ -71,13 +72,13 @@ class Announcement extends BaseModel
     {
         return [
             'id' => 'ID',
-            'title' => '公告标题',
-            'author_id' => '发布人',
-            'picture_id' => '公告预览图',
-            'description' => '公告简介',
-            'content' => '公告内容',
-            'created_at' => '创建时间',
-            'updated_at' => '修改时间',
+            'title' => Yii::t('common', 'Title'),
+            'author_id' => Yii::t('common', 'Author'),
+            'picture_id' => Yii::t('common', 'Picture'),
+            'description' => Yii::t('common', 'Description'),
+            'content' => Yii::t('common', 'Content'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 

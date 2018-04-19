@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Yii;
 use yii\base\Model;
 /**
  * This is the model class for table "{{%links}}".
@@ -58,10 +59,10 @@ class Links extends BaseModel
     {
         return [
             'id' => 'ID',
-            'name' => '友情链接名称',
-            'url' => '友情链接url地址',
-            'created_at' => '创建时间',
-            'updated_at' => '修改时间',
+            'name' => Yii::t('common', 'Name'),
+            'url' => Yii::t('common', 'Url'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 }

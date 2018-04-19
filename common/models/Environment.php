@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Yii;
 use PDOException;
 use yii\base\Model;
 /**
@@ -62,10 +63,11 @@ class Environment extends BaseModel
     {
         return [
             'id' => 'ID',
-            'content' => '介绍设备环境内容',
-            'author_id' => '发布人',
-            'created_at' => '创建时间',
-            'updated_at' => '修改时间',
+            'title' => Yii::t('common', 'Title'),
+            'content' => Yii::t('common', 'Content'),
+            'author_id' => Yii::t('common', 'Author'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 

@@ -6,7 +6,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Picture */
 
-$this->title = Yii::t('backend', 'Create Picture');
+$this->title = sprintf('%s%s',
+    Yii::t('backend', 'Create'),
+    Yii::t('backend', 'Picture')
+);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Pictures'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Yii;
 use PDOException;
 use yii\base\Model;
 /**
@@ -56,9 +57,9 @@ class RollingMap extends BaseModel
     {
         return [
             'id' => 'ID',
-            'picture_id' => '图片ID',
-            'created_at' => '创建时间',
-            'updated_at' => '修改时间',
+            'picture_id' => Yii::t('common', 'Picture'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 

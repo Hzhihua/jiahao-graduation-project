@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Yii;
 use PDOException;
 use yii\base\Model;
 /**
@@ -64,11 +65,11 @@ class UploadWork extends BaseModel
     {
         return [
             'id' => 'ID',
-            'file_id' => '上传文件ID',
-            'student_name' => '学生名称',
-            'student_class_id' => '学生班级ID',
-            'created_at' => '创建时间',
-            'updated_at' => '修改时间',
+            'file_id' => Yii::t('common', 'File'),
+            'student_name' => Yii::t('common', 'Student Name'),
+            'student_class_id' => Yii::t('common', 'Student Class'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 

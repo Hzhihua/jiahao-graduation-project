@@ -66,11 +66,11 @@ class File extends BaseModel
     {
         return [
             'id' => 'ID',
-            'name' => '上传文件的名称',
-            'size' => '上传文件的大小',
-            'url' => '文件url地址',
-            'created_at' => '创建时间',
-            'updated_at' => '修改时间',
+            'name' => Yii::t('common', 'Name'),
+            'size' => Yii::t('common', 'Size'),
+            'url' => Yii::t('common', 'Url'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 

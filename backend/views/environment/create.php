@@ -6,7 +6,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Environment */
 
-$this->title = Yii::t('backend', 'Create Environment');
+$this->title = sprintf('%s%s',
+    Yii::t('backend', 'Create'),
+    Yii::t('backend', 'Environment')
+);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Environments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

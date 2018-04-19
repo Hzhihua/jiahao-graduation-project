@@ -17,7 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(Yii::t('backend', 'Create Announcement'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(sprintf('%s%s',
+            Yii::t('backend', 'Create'),
+            Yii::t('backend', 'Announcement')
+        ), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -26,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'title',
             [
                 'attribute' => 'author_id',
@@ -35,7 +37,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'label' => Yii::t('backend', 'picture'),
                 'attribute' => 'picture_id',
                 'format' => 'raw',
                 'value' => function ($model) {

@@ -58,9 +58,9 @@ class Picture extends BaseModel
     {
         return [
             'id' => 'ID',
-            'url' => '原图url地址',
-            'created_at' => '创建时间',
-            'updated_at' => '修改时间',
+            'url' => Yii::t('common', 'Url'),
+            'created_at' => Yii::t('common', 'Created At'),
+            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 

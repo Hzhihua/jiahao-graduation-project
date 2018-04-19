@@ -6,7 +6,10 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\RollingMap */
 
-$this->title = Yii::t('backend', 'Create Rolling Map');
+$this->title = sprintf('%s%s',
+    Yii::t('backend', 'Create'),
+    Yii::t('backend', 'Rolling Map')
+);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Rolling Maps'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
