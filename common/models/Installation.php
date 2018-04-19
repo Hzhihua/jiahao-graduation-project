@@ -124,6 +124,6 @@ class Installation extends BaseModel
     public function getAuthor()
     {
         // id 是 author 表的 id
-        return $this->hasOne(Author::className(), ['id' => 'author_id']);
+        return $this->hasOne(Author::class, ['id' => 'author_id']);
     }
 }

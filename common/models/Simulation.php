@@ -145,7 +145,7 @@ class Simulation extends BaseModel
     public function getFile()
     {
         // id 是 file 表的 id
-        return $this->hasOne(File::className(), ['id' => 'file_id']);
+        return $this->hasOne(File::class, ['id' => 'file_id']);
     }
 
     /**
@@ -155,6 +155,6 @@ class Simulation extends BaseModel
     public function getAuthor()
     {
         // id 是 author 表的 id
-        return $this->hasOne(Author::className(), ['id' => 'author_id']);
+        return $this->hasOne(Author::class, ['id' => 'author_id']);
     }
 }

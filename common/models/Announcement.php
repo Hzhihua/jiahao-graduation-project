@@ -156,7 +156,7 @@ class Announcement extends BaseModel
     public function getAuthor()
     {
         // id 是 author 表的 id
-        return $this->hasOne(Author::className(), ['id' => 'author_id']);
+        return $this->hasOne(Author::class, ['id' => 'author_id']);
     }
 
     /**
@@ -166,7 +166,7 @@ class Announcement extends BaseModel
     public function getPicture()
     {
         // id 是 picture 表的 id
-        return $this->hasOne(Picture::className(), ['id' => 'picture_id']);
+        return $this->hasOne(Picture::class, ['id' => 'picture_id']);
     }
 
 }

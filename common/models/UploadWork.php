@@ -147,7 +147,7 @@ class UploadWork extends BaseModel
     public function getFile()
     {
         // id 是 file 表的 id
-        return $this->hasOne(File::className(), ['id' => 'file_id']);
+        return $this->hasOne(File::class, ['id' => 'file_id']);
     }
 
     /**
@@ -157,7 +157,7 @@ class UploadWork extends BaseModel
     public function getStudentClass()
     {
         // id 是 student_class_id 表的 id
-        return $this->hasOne(StudentClass::className(), ['id' => 'student_class_id']);
+        return $this->hasOne(StudentClass::class, ['id' => 'student_class_id']);
     }
 
 }

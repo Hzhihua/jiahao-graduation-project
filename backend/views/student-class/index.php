@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\StudentClassSearch */
@@ -27,8 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'class_name',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\SimulationSearch */
@@ -26,10 +27,35 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'category',
-            'file_id',
-            'author_id',
-            'created_at',
+            [
+                'attribute' => 'category',
+                'value' => function ($model) {
+                    $index = [
+                        1 => '数电',
+                        2 => '模电',
+                    ];
+                    return $index[$model->category];
+                },
+            ],
+            [
+                'attribute' => 'file_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ColumnsHelper::getFileHtmlById($model->file_id);
+                },
+            ],
+            [
+                'attribute' => 'author_id',
+                'value' => function ($model) {
+                    return ColumnsHelper::getAuthorNameById($model->author_id);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
             //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

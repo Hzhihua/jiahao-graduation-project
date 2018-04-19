@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\AnnouncementSearch */
@@ -27,8 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'title',
-            'author_id',
-            'picture_id',
+            [
+                'attribute' => 'author_id',
+                'value' => function ($model) {
+                    return ColumnsHelper::getAuthorNameById($model->author_id);
+                },
+            ],
+            [
+                'label' => Yii::t('backend', 'picture'),
+                'attribute' => 'picture_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ColumnsHelper::getPictureHtmlById($model->picture_id);
+                },
+            ],
             'description',
             //'content:ntext',
             //'created_at',

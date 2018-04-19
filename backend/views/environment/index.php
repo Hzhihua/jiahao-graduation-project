@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\EnvironmentSearch */
@@ -28,9 +29,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'content:ntext',
-            'author_id',
-            'created_at',
-            //'updated_at',
+            [
+                'attribute' => 'author_id',
+                'value' => function ($model) {
+                    return ColumnsHelper::getAuthorNameById($model->author_id);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

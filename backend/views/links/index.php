@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\LinksSearch */
@@ -26,10 +27,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'name',
-            'url:url',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'name',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ColumnsHelper::links($model->name, $model->url);
+                },
+            ],
+            'url',
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->created_at);
+                },
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

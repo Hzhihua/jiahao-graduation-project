@@ -127,6 +127,6 @@ class RollingMap extends BaseModel
     public function getPicture()
     {
         // id 是 picture 表的 id
-        return $this->hasOne(Picture::className(), ['id' => 'picture_id']);
+        return $this->hasOne(Picture::class, ['id' => 'picture_id']);
     }
 }
