@@ -57,6 +57,7 @@ class ColumnsHelper
     public static function getPictureHtml($url, $option = [])
     {
         isset($option['alt']) || $option['alt'] = Yii::t('backend', 'Loading picture failed');
+        isset($option['width']) || $option['width'] = 150;
 
         return Html::img($url, $option);
     }
