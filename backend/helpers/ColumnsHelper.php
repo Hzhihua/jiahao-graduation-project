@@ -12,6 +12,7 @@ use yii\helpers\Html;
 use common\models\File;
 use common\models\Picture;
 use common\models\Author;
+use common\models\StudentClass;
 
 class ColumnsHelper
 {
@@ -133,5 +134,20 @@ class ColumnsHelper
     public static function links($name, $url, $option = [])
     {
         return Html::a($name, $url, $option);
+    }
+
+    /**
+     * @param int $student_class_id
+     * @return string
+     */
+    public static function getStudentClassNameById($student_class_id)
+    {
+        $data = StudentClass::find()
+            ->select('class_name')
+            ->where(['id' => (int) $student_class_id])
+            ->asArray()
+            ->one();
+
+        return static::htmlEncode($data['class_name']);
     }
 }
