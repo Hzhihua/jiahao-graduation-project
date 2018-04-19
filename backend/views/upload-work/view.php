@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\UploadWork */
@@ -29,11 +30,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'file_id',
+            [
+                'attribute' => 'file_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ColumnsHelper::getFileHtmlById($model->file_id);
+                },
+            ],
             'student_name',
-            'student_class_id',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'student_class_id',
+                'value' => function ($model) {
+                    return ColumnsHelper::getStudentClassNameById($model->student_class_id);
+                },
+            ],
+            [
+                'attribute' => 'created_at)',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
         ],
     ]) ?>
 

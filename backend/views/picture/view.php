@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Picture */
@@ -29,9 +30,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'url:url',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'url',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ColumnsHelper::getPictureHtml($model->url);
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
         ],
     ]) ?>
 

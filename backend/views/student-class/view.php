@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\StudentClass */
@@ -30,8 +31,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'class_name',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'created_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
         ],
     ]) ?>
 

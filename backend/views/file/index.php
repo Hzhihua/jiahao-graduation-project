@@ -43,9 +43,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             [
-                'attribute' => 'created_at',
+                'attribute' => 'updated_at',
                 'value' => function ($model) {
-                    return ColumnsHelper::date($model->created_at);
+                    return ColumnsHelper::date($model->updated_at);
                 },
             ],
             //'updated_at',

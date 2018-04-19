@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel common\models\UploadWorkSearch */
@@ -28,10 +29,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'file_id',
+            [
+                'attribute' => 'file_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ColumnsHelper::getFileHtmlById($model->file_id);
+                },
+            ],
             'student_name',
-            'student_class_id',
-            'created_at',
+            [
+                'attribute' => 'student_class_id',
+                'value' => function ($model) {
+                    return ColumnsHelper::getStudentClassNameById($model->student_class_id);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
             //'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],

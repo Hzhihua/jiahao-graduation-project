@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Installation */
@@ -31,9 +32,24 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'content:ntext',
-            'author_id',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'author_id',
+                'value' => function ($model) {
+                    return ColumnsHelper::getAuthorNameById($model->author_id);
+                },
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
         ],
     ]) ?>
 

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Simulation */
@@ -29,11 +30,41 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'category',
-            'file_id',
-            'author_id',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'category',
+                'value' => function ($model) {
+                    $index = [
+                        1 => '数电',
+                        2 => '模电',
+                    ];
+                    return $index[$model->category];
+                },
+            ],
+            [
+                'attribute' => 'file_id',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return ColumnsHelper::getFileHtmlById($model->file_id);
+                },
+            ],
+            [
+                'attribute' => 'author_id',
+                'value' => function ($model) {
+                    return ColumnsHelper::getAuthorNameById($model->author_id);
+                },
+            ],
+            [
+                'attribute' => 'created_at)',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function ($model) {
+                    return ColumnsHelper::date($model->updated_at);
+                },
+            ],
         ],
     ]) ?>
 
