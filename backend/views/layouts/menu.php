@@ -21,7 +21,7 @@ use yii\helpers\Url;
                     ["label" => "文件管理", "url" => Url::to(["/file"]), "icon" => "file-code-o"],
                     ["label" => "图片管理", "url" => Url::to(["/picture"]), "icon" => "file-photo-o"],
                     ["label" => "滚图管理", "url" => Url::to(["/rolling-map"]), "icon" => "file-image-o"],
-                    ["label" => "用户管理", "url" => Url::to(["/user"]), "icon" => "user"],
+//                    ["label" => "用户管理", "url" => Url::to(["/user"]), "icon" => "user"],
                     ["label" => "环境介绍", "url" => Url::to(["/environment"]), "icon" => "cog"],
                     ["label" => "安装介绍", "url" => Url::to(["/installation"]), "icon" => "institution"],
                     ["label" => "仿真介绍", "url" => Url::to(["/simulation"]), "icon" => "cog"],
