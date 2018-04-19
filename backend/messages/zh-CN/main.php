@@ -25,6 +25,8 @@ return [
     'Simulations' => '仿真文件管理',
     'Student Class' => '学生班级',
     'Student Classes' => '学生班级管理',
+    'Upload Work' => '上传作业',
+    'Upload Works' => '上传作业管理',
     'Link' => '友情链接',
     'Links' => '友情链接管理',
 

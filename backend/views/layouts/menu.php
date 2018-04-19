@@ -25,6 +25,7 @@ use yii\helpers\Url;
                     ["label" => "环境介绍", "url" => Url::to(["/environment"]), "icon" => "cog"],
                     ["label" => "安装介绍", "url" => Url::to(["/installation"]), "icon" => "institution"],
                     ["label" => "仿真介绍", "url" => Url::to(["/simulation"]), "icon" => "cog"],
+                    ["label" => "上传作业", "url" => Url::to(["/upload-work"]), "icon" => "book"],
                     ["label" => "学生班级", "url" => Url::to(["/student-class"]), "icon" => "address-book"],
                     ["label" => "友情链接", "url" => Url::to(["/links"]), "icon" => "link"],
                 ],

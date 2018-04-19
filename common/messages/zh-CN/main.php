@@ -17,6 +17,7 @@ return [
     'File' => '文件名称',
     'Class Name' => '班级名称',
     'Student Name' => '学生名称',
+    'Student Class' => '学生班级',
     'Created At' => '创建时间',
     'Updated At' => '修改时间',
 ];
