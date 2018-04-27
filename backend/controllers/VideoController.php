@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Picture;
-use common\models\PictureSearch;
+use common\models\Video;
+use common\models\VideoSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * PictureController implements the CRUD actions for Picture model.
+ * VideoController implements the CRUD actions for Video model.
  */
-class PictureController extends Controller
+class VideoController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,29 +30,12 @@ class PictureController extends Controller
     }
 
     /**
-     * @return array
-     */
-    public function actions()
-    {
-        return [
-            'image-upload' => [
-                'class' => 'backend\actions\ImageUploadAction',
-                'model' => 'common\models\Picture',
-                'attribute' => 'url',
-            ],
-            'image-delete' => [
-                'class' => 'backend\actions\ImageDeleteAction',
-            ],
-        ];
-    }
-
-    /**
-     * Lists all Picture models.
+     * Lists all Video models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PictureSearch();
+        $searchModel = new VideoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -62,8 +45,8 @@ class PictureController extends Controller
     }
 
     /**
-     * Displays a single Picture model.
-     * @param string $id
+     * Displays a single Video model.
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -75,13 +58,13 @@ class PictureController extends Controller
     }
 
     /**
-     * Creates a new Picture model.
+     * Creates a new Video model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Picture();
+        $model = new Video();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -93,9 +76,9 @@ class PictureController extends Controller
     }
 
     /**
-     * Updates an existing Picture model.
+     * Updates an existing Video model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -113,9 +96,9 @@ class PictureController extends Controller
     }
 
     /**
-     * Deletes an existing Picture model.
+     * Deletes an existing Video model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
+     * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -127,15 +110,15 @@ class PictureController extends Controller
     }
 
     /**
-     * Finds the Picture model based on its primary key value.
+     * Finds the Video model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param string $id
-     * @return Picture the loaded model
+     * @param integer $id
+     * @return Video the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Picture::findOne($id)) !== null) {
+        if (($model = Video::findOne($id)) !== null) {
             return $model;
         }
 

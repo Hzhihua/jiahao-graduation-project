@@ -11,6 +11,7 @@ return [
     'Description' => '公告简介',
     'Content' => '内容',
     'Size' => '大小',
+    'Origin Name' => '名称',
     'Url' => '地址',
     'Name' => '名称',
     'Category' => '分类',

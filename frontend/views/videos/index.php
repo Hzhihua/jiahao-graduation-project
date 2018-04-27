@@ -6,7 +6,6 @@
  */
 
 /* @var $this \yii\web\View */
-use yii\helpers\Html;
 use frontend\assets\AppAsset;
 
 AppAsset::register($this);

@@ -29,6 +29,15 @@ class RollingMapController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        return [
+            'image-upload' => [
+                'class' => 'backend\actions\ImageUploadAction',
+            ],
+        ];
+    }
+
     /**
      * Lists all RollingMap models.
      * @return mixed

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\helpers\FormHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\RollingMap */
@@ -12,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'picture_id')->textInput(['maxlength' => true]) ?>
+    <?= FormHelper::ImageUpload($form, $model, 'picture_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>

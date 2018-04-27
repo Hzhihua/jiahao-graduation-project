@@ -55,8 +55,8 @@ $weekDay = '星期' . $weekArray[date('w')];
             <li <?= !isset($select[0]) ?: $select[0]; ?>><a href="<?= Url::home() ?>" data-pjax = 0><?= Yii::t('frontend', 'Home')?></a></li>
             <li <?= !isset($select[1]) ?: $select[1]; ?>><a href="<?= Url::to(['/introduction/index'])?>"><?= Yii::t('frontend', 'Introduction')?></a></li>
             <li <?= !isset($select[2]) ?: $select[2]; ?>><a href="<?= Url::to(['/installation/index'])?>"><?= Yii::t('frontend', 'Installation')?></a></li>
-            <li <?= !isset($select[3]) ?: $select[3]; ?>><a href="<?= Url::to(['/simulation/index'])?>"><?= Yii::t('frontend', 'Simulation')?></a></li>
-            <li <?= !isset($select[4]) ?: $select[4]; ?>><a href="<?= Url::to(['/environment/index'])?>"><?= Yii::t('frontend', 'Environment')?></a></li>
+            <li <?= !isset($select[3]) ?: $select[3]; ?>><a href="<?= Url::to(['/communication/index'])?>"><?= Yii::t('frontend', 'Communication')?></a></li>
+            <li <?= !isset($select[4]) ?: $select[4]; ?>><a href="<?= Url::to(['/source-notification/index'])?>"><?= Yii::t('frontend', 'Course Notification')?></a></li>
             <li <?= !isset($select[5]) ?: $select[5]; ?>><a href="<?= Url::to(['/videos/index'])?>"><?= Yii::t('frontend', 'Videos')?></a></li>
             <li <?= !isset($select[6]) ?: $select[6]; ?>><a href="<?= Url::to(['/upload-works/index'])?>"><?= Yii::t('frontend', 'Upload Works')?></a></li>
         </ul>

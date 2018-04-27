@@ -5,14 +5,27 @@
  * @Github: https://github.com/Hzhihua
  */
 
+use frontend\assets\AppAsset;
 use hzhihua\videojs\VideoJsWidget;
 
+/* @var $this \yii\web\View  */
+
+AppAsset::register($this);
+$this->title = Yii::t('frontend', 'Videos');
+
+$css = <<<'CSS'
+    #videojs-w0 {
+        margin: auto;
+    }
+CSS;
+
+$this->registerCss($css);
 ?>
 
 <?= VideoJsWidget::widget([
     'options' => [  // video tag attibutes
         'class' => 'video-js vjs-default-skin vjs-big-play-centered',
-        'title' => '这里是视频标题',
+        'title' => $this->title,
         'poster' => "//vjs.zencdn.net/v/oceans.png",  // 视频播放封面地址
         'controls' => true, // 显示控制页面
         'preload' => false,
@@ -21,13 +34,13 @@ use hzhihua\videojs\VideoJsWidget;
         'autoplay' => false, // 是否自动播放
         'loop' => false, // 循环播放
         'hidden' => false, // 是否隐藏
-        'width' => '500',
-//       'height' => '260',
+        'width' => '1200',
+//            'height' => '500',
         'data' => [
             'setup' => [
-//               'aspectRatio' => '16:9',  // responsive 响应式比例
+//                    'aspectRatio' => '16:9',  // responsive 响应式比例
                 'techOrder' => ['html5', 'flash'],  // 默认HTML5播放  不支持HTML5自动转flash播放
-                'language' => Yii::$app->language,
+                'language' => VideoJsWidget::getLanguage(),
             ],
         ],
     ],
@@ -36,7 +49,7 @@ use hzhihua\videojs\VideoJsWidget;
 //            'controlBar' => [
 //                'children' => [
 //                    'playToggle' => true,
-//                    'bigPlayButton' => false,
+////                    'bigPlayButton' => false,
 //
 //                    'currentTimeDisplay' => true,
 //                    'timeDivider' => true,
@@ -67,10 +80,10 @@ use hzhihua\videojs\VideoJsWidget;
 //            ],
     ],
     'initFunction' => '
-         function () {
-             console.log(this);
-         }
-     ',
+        function () {
+            console.log(this);
+        }
+    ',
     'tags' => [
         'source' => [
             ['src' => '//vjs.zencdn.net/v/oceans.mp4', 'type' => 'video/mp4'],
@@ -85,3 +98,5 @@ use hzhihua\videojs\VideoJsWidget;
 //            ]
     ]
 ]); ?>
+
+

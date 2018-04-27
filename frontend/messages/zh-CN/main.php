@@ -7,13 +7,16 @@
 
 return [
     'Home' => '首页',
-    'Introduction' => '简介',
+    'Introduction' => '课程简介',
     'Installation' => '安装指南',
     'Simulation' => '电子仿真模块',
     'Environment' => '设备环境',
     'Upload Works' => '作业提交',
-    'Videos' => '视频',
+    'Videos' => '学校资料',
     'Announcement' => '公告详情',
+
+    'Communication' => '交流论坛',
+    'Course Notification' => '课程动态',
 
     'Read More' => '阅读全文',
     'Select or Drag file to upload' => '选择或者拖拽文件上传',

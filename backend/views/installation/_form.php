@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use backend\helpers\FormHelper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Installation */
@@ -12,9 +13,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= FormHelper::editor($form, $model,'content') ?>
 
-    <?= $form->field($model, 'author_id')->textInput(['maxlength' => true]) ?>
+    <?= FormHelper::authorSelectize($form, $model, 'author_id') ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>

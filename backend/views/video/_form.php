@@ -5,23 +5,24 @@ use yii\widgets\ActiveForm;
 use backend\helpers\FormHelper;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Announcement */
+/* @var $model common\models\Video */
 /* @var $form yii\widgets\ActiveForm */
+
 ?>
 
-<div class="announcement-form">
+<div class="video-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= FormHelper::authorSelectize($form, $model, 'author_id') ?>
+    <?= $form->field($model, 'url')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'picture_id')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'iframe')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
+<!--    --><?//= $form->field($model, 'created_at')->textInput() ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+<!--    --><?//= $form->field($model, 'updated_at')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>

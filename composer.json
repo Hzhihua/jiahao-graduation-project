@@ -20,8 +20,12 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "edgardmessias/yii2-nprogress": "*",
         "hzhihua/yii2-dump": "~1.0",
-        "hzhihua/yii2-videojs-widget": "~1.0",
-        "yiister/yii2-gentelella": "~1.0"
+        "hzhihua/yii2-videojs-widget": "*",
+        "yiister/yii2-gentelella": "~1.0",
+        "2amigos/yii2-selectize-widget": "~1.0",
+        "2amigos/yii2-file-upload-widget": "~1.0",
+        "2amigos/yii2-ckeditor-widget": "~2.1",
+        "bailangzhan/yii2-webuploader": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -10,7 +10,8 @@ use yii\base\ModelEvent;
  * This is the model class for table "{{%picture}}".
  *
  * @property int $id
- * @property string $url 原图url地址
+ * @property string $origin_name 图片名称
+ * @property string $url 原图url地址(ltrim(/))
  * @property string $created_at 创建时间
  * @property string $updated_at 修改时间
  */
@@ -30,9 +31,9 @@ class Picture extends BaseModel
     public function rules()
     {
         return [
-            [['url', 'created_at', 'updated_at'], 'required'],
+            [['origin_name', 'url', 'created_at', 'updated_at'], 'required'],
             [['created_at', 'updated_at'], 'integer'],
-            [['url'], 'string', 'max' => 255],
+            [['origin_name', 'url'], 'string', 'max' => 255],
         ];
     }
 
@@ -44,9 +45,11 @@ class Picture extends BaseModel
         return array_merge(Model::scenarios(), [
             'insert' => [
                 'url',
+                'origin_name',
             ],
             'update' => [
                 'url',
+                'origin_name',
             ],
         ]);
     }
@@ -59,6 +62,7 @@ class Picture extends BaseModel
         return [
             'id' => 'ID',
             'url' => Yii::t('common', 'Url'),
+            'origin_name' => Yii::t('common', 'Origin Name'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
         ];
