@@ -7,7 +7,9 @@
 
 namespace common\components;
 
+use common\models\Picture;
 use Yii;
+use yii\base\Exception;
 use yii\base\Model;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
@@ -36,28 +38,52 @@ class Upload extends Model
     }
 
     /**
-     *
+     * @return array
      */
     public function upImage ()
     {
         $model = new static;
         $model->file = UploadedFile::getInstanceByName('file');
         if (!$model->file) {
-            return false;
+            return [
+                'code' => 1,
+                'msg' => 'upload file failed',
+            ];
         }
         if ($model->validate()) {
             $relativePath = Yii::$app->params['imageUploadRelativePath'];
             $successPath = Yii::$app->params['imageUploadSuccessPath'];
-            $fileName = $model->file->baseName . '.' . $model->file->extension;
+            $fileName = md5($model->file->name) . '.' . $model->file->extension;
+
             if (!is_dir($relativePath)) {
-                FileHelper::createDirectory($relativePath);
+                try {
+                    FileHelper::createDirectory($relativePath);
+                } catch (Exception $e) {
+                    return [
+                        'code' => 1,
+                        'msg' => $e->getMessage(),
+                    ];
+                }
             }
-            $model->file->saveAs($relativePath . $fileName);
-            return [
-                'code' => 0,
-                'url' => Yii::$app->params['domain'] . $successPath . $fileName,
-                'attachment' => $successPath . $fileName
-            ];
+
+            try {
+                $model->file->saveAs($relativePath . $fileName);
+                $id = $this->savePicture2DB($model->file);
+
+                return [
+                    'code' => 0,
+                    'url' => Yii::$app->params['domain'] . $successPath . $fileName,
+                    'attachment' => $id,
+//                    'attachment' => $successPath . $fileName,
+
+                ];
+            } catch (Exception $e) {
+                return [
+                    'code' => 1,
+                    'msg' => $e->getMessage(),
+                ];
+            }
+
         } else {
             $errors = $model->errors;
             return [
@@ -65,5 +91,24 @@ class Upload extends Model
                 'msg' => current($errors)[0]
             ];
         }
+    }
+
+    /**
+     * @param UploadedFile $file
+     * @return bool
+     * @throws Exception
+     */
+    public function savePicture2DB(UploadedFile $file)
+    {
+        $model = new Picture();
+        $model->origin_name = $file->name;
+        $model->url = md5($file->name) . '.' . $file->extension;
+
+        if ($model->validate() && $model->save()) {
+            return Yii::$app->db->getLastInsertID();
+        } else {
+            throw new Exception('could not save picture');
+        }
+
     }
 }

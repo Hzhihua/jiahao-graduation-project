@@ -33,8 +33,9 @@ class Announcement extends BaseModel
      */
     public function rules()
     {
+        return [];
         return [
-            [['title', 'author_id', 'picture_id', 'description', 'content', 'created_at', 'updated_at'], 'required'],
+            [['title', 'author_id', 'picture_id', 'description', 'content'], 'required'],
             [['content'], 'string', 'max' => 65535],
             [['picture_id', 'author_id'], 'integer'],
             [['created_at', 'updated_at'], 'integer'],
