@@ -14,7 +14,7 @@ AppAsset::register($this);
 $page = Yii::$app->getRequest()->get('page');
 $page = (int)$page < 1 ? 1 : $page;
 $params = Yii::$app->params;
-$rootDir = rtrim($params['uploadPictureRoot'], '/') . '/';
+$rootDir = '//localhost/jhgp/backend/web/img/temp/';
 
 $hasNext = ((int) Announcement::find()->count() - ((int) $page * (int) Yii::$app->params['AnnouncementPageSize'])) > 0 ? true : false;
 
@@ -27,7 +27,7 @@ $this->title = 'Proteus -- 嘉应学院';
         <ul class="am-slides">
             <?php foreach ($data['rollingMap'] as $rollingMap): ?>
                 <li>
-                    <img src="<?= $rootDir . $rollingMap['picture']['url']; ?>">
+                    <img src="<?= $rootDir . $rollingMap['picture']['new_directory'] . '/' .$rollingMap['picture']['new_name'] .'.'. $rollingMap['picture']['extension']; ?>">
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -42,7 +42,7 @@ $this->title = 'Proteus -- 嘉应学院';
         <?php foreach ($data['announcement'] as $announcement): ?>
         <article class="am-g blog-entry-article">
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
-                <img width="400" height="192" src="<?= $rootDir . $announcement['picture']['url']; ?>" alt="预览图" class="am-u-sm-12">
+                <img width="400" height="192" src="<?= $rootDir . $announcement['picture']['new_directory'] . '/' .$announcement['picture']['new_name'] .'.'. $announcement['picture']['extension']; ?>" alt="预览图" class="am-u-sm-12">
             </div>
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
                 <span> @<?= $announcement['author']['name']; ?> &nbsp;</span>
