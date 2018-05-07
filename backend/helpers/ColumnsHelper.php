@@ -71,12 +71,24 @@ class ColumnsHelper
     public static function getPictureHtmlById($picture_id, $option = [])
     {
         $data = Picture::find()
-            ->select('url')
+            ->select(['new_name', 'new_directory','extension'])
             ->where(['id' => (int) $picture_id])
             ->asArray()
             ->one();
+        if ($data) {
+            $url = sprintf(
+                '%s%s/%s.%s',
+                dirname($_SERVER['PHP_SELF']).'/img/temp/',
+                $data['new_directory'],
+                $data['new_name'],
+                $data['extension']
+            );
+        } else {
+            $url = 'javascript:;';
+        }
 
-        return static::getPictureHtml($data['url'], $option);
+
+        return static::getPictureHtml($url, $option);
     }
 
     /**

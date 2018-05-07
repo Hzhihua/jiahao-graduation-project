@@ -19,13 +19,13 @@
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "edgardmessias/yii2-nprogress": "*",
-        "hzhihua/yii2-dump": "~1.0",
+        "hzhihua/yii2-dump": "1.0.3",
         "hzhihua/yii2-videojs-widget": "*",
         "yiister/yii2-gentelella": "~1.0",
         "2amigos/yii2-selectize-widget": "~1.0",
-        "2amigos/yii2-file-upload-widget": "~1.0",
         "2amigos/yii2-ckeditor-widget": "~2.1",
-        "bailangzhan/yii2-webuploader": "dev-master"
+        "kartik-v/bootstrap-fileinput": "4.4.8",
+        "kartik-v/yii2-widget-fileinput": "1.0.6"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
@@ -36,6 +36,11 @@
     },
     "config": {
         "process-timeout": 1800
+    },
+    "autoload": {
+        "psr-4": {
+            "hzhihua\\actions\\": "backend/actions"
+        }
     },
     "repositories": [
         {

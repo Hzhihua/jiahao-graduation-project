@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Picture;
 use Yii;
 use common\models\RollingMap;
 use common\models\RollingMapSearch;
@@ -21,7 +22,7 @@ class RollingMapController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -33,7 +34,10 @@ class RollingMapController extends Controller
     {
         return [
             'image-upload' => [
-                'class' => 'backend\actions\ImageUploadAction',
+                'class' => 'hzhihua\actions\FileUploadAction',
+                'on beforeUpload' => [new Picture(), 'beforeImageUpload'],
+                'on afterUpload' => [new Picture(), 'afterImageUpload'],
+//                'responseFormat' => 'json',
             ],
         ];
     }
@@ -75,8 +79,13 @@ class RollingMapController extends Controller
     {
         $model = new RollingMap();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            $file_id = Picture::getIdByFileKey($post['picture_id']);
+            $_POST['RollingMap']['picture_id'] = $file_id;
+            if ($model->load($_POST) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [

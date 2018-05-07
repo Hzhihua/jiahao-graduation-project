@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use common\models\Picture;
 use Yii;
 use common\models\Announcement;
 use common\models\AnnouncementSearch;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,6 +27,28 @@ class AnnouncementController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+        ];
+    }
+
+    public function actions()
+    {
+        return [
+            'image-upload' => [
+                'class' => 'hzhihua\actions\FileUploadAction',
+                'on beforeUpload' => [new Picture(), 'beforeImageUpload'],
+                'on afterUpload' => [new Picture(), 'afterImageUpload'],
+//                'responseFormat' => 'json',
+            ],
+            'file-delete' => [
+                'class' => 'hzhihua\actions\FileDeleteAction',
+                'on beforeDelete' => [new Picture(), 'beforeImageDelete'],
+                'on afterDelete' => [new Picture(), 'afterImageDelete'],
+            ],
+            'file-download' => [
+                'class' => 'hzhihua\actions\FileDownloadAction',
+                'on beforeDownload' => [new Picture(), 'beforeImageDownload'],
+//                'responseFormat' => 'json',
             ],
         ];
     }
@@ -66,8 +90,13 @@ class AnnouncementController extends Controller
     {
         $model = new Announcement();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            $file_id = Picture::getIdByFileKey($post['picture_id']);
+            $_POST['Announcement']['picture_id'] = $file_id;
+            if ($model->load($_POST) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('create', [

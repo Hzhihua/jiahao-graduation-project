@@ -7,6 +7,8 @@ use backend\helpers\FormHelper;
 /* @var $this yii\web\View */
 /* @var $model common\models\Announcement */
 /* @var $form yii\widgets\ActiveForm */
+
+//\backend\actions\UploadAsset::register($this);
 ?>
 
 <div class="announcement-form">
@@ -17,7 +19,9 @@ use backend\helpers\FormHelper;
 
     <?= FormHelper::authorSelectize($form, $model, 'author_id') ?>
 
-    <?= $form->field($model, 'picture_id')->textInput(['maxlength' => true]) ?>
+    <?= FormHelper::ImageUpload($form, $model, 'picture_id') ?>
+
+<!--    --><?//= \backend\actions\UploadWidget::widget([])?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 

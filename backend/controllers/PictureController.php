@@ -36,9 +36,9 @@ class PictureController extends Controller
     {
         return [
             'image-upload' => [
-                'class' => 'backend\actions\ImageUploadAction',
+                'class' => 'backend\actions\FileUploadAction',
                 'model' => 'common\models\Picture',
-                'attribute' => 'url',
+                'attribute' => 'picture',
             ],
             'image-delete' => [
                 'class' => 'backend\actions\ImageDeleteAction',
