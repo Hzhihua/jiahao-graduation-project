@@ -21,11 +21,10 @@
         "edgardmessias/yii2-nprogress": "*",
         "hzhihua/yii2-dump": "1.0.3",
         "hzhihua/yii2-videojs-widget": "*",
+        "hzhihua/yii2-bootstrap-fileinput": "dev-master",
         "yiister/yii2-gentelella": "~1.0",
         "2amigos/yii2-selectize-widget": "~1.0",
-        "2amigos/yii2-ckeditor-widget": "~2.1",
-        "kartik-v/bootstrap-fileinput": "4.4.8",
-        "kartik-v/yii2-widget-fileinput": "1.0.6"
+        "2amigos/yii2-ckeditor-widget": "~2.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
