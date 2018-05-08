@@ -7,11 +7,13 @@
 
 namespace backend\helpers;
 
+use common\models\File;
 use common\models\Picture;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
 use yii\helpers\Html;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Author;
@@ -101,6 +103,8 @@ class FormHelper
         $fileKey = Yii::$app->request->post($attribute);
         if ($fileKey) {
             $fileInfo = Picture::getInfoByFileKey($fileKey);
+        } elseif ($model->id) {
+            $fileInfo = Picture::find()->where(['id' => $model->picture_id])->asArray()->one();
         }
         $inputId = static::getInputId();
         $alertMsg = 'Are you sure you want to delete this file?';
@@ -126,13 +130,103 @@ class FormHelper
                 'initialPreviewFileType' => 'image',
                 'initialCaption' => $model->$attribute,
                 'initialPreviewConfig' => isset($fileInfo) ? static::initialPreviewConfig($fileInfo) : [],
-                'maxFileSize' => 5120,
+                'maxFileSize' => 512000,
             ]
         ], $clientOptions);
 
         return static::upload($form, $model, $attribute, $clientOptions);
     }
 
+    /**
+     * 文件资源上传
+     * @param ActiveForm $form
+     * @param $model
+     * @param $attribute
+     * @param array $clientOptions
+     * @return string
+     * @throws \Exception
+     */
+    public static function FileUpload(ActiveForm $form, $model, $attribute, array $clientOptions = [])
+    {
+//        $inputId = static::getInputId();
+        $alertMsg = 'Are you sure you want to delete this file?';
+        $clientOptions = ArrayHelper::merge([
+            'name' => 'file',
+            'options'=>[
+                'multiple' => false,
+                'accept' => 'all',
+            ],
+            'pluginEvents' => [
+                'filepredelete' => 'function (jqXHR) {var abort = true;if (confirm("'.$alertMsg.'")) {abort = false;}return abort;}',
+                // 'fileuploaded' => 'function (event, data) {var key = data.response.file_key;$("#'.$inputId.'").val(key)}'
+            ],
+
+            'pluginOptions' => [
+                'browseOnZoneClick' => true, // 点击打开文件选择
+                'uploadAsync' => true, // ajax异步上传
+                'uploadUrl' => Url::to(['file-upload']), // 上传URL
+                'deleteUrl' => Url::to(['file-delete']),
+//                'previewFileType' => 'image',
+                'initialPreview' => [
+                    // 图像数据
+                    'http://lorempixel.com/800/460/business/1',
+                    // 图像原生标记语言
+                    '<img src="http://lorempixel.com/800/460/business/2" class="kv-preview-data file-preview-image" style="height:160px">',
+                    // 文本数据
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut mauris ut libero fermentum feugiat eu et dui. Mauris condimentum rhoncus enim, sed semper neque vestibulum id. Nulla semper, turpis ut consequat imperdiet, enim turpis aliquet orci, eget venenatis elit sapien non ante. Aliquam neque ipsum, rhoncus id ipsum et, volutpat tincidunt augue. Maecenas dolor libero, gravida nec est at, commodo tempor massa. Sed id feugiat massa. Pellentesque at est eu ante aliquam viverra ac sed est.",
+                    // PDF数据
+                    'http://kartik-v.github.io/bootstrap-fileinput-samples/samples/pdf-sample.pdf',
+                    // 视频数据
+                    "http://kartik-v.github.io/bootstrap-fileinput-samples/samples/small.mp4",
+                ],
+                'overwriteInitial' => false,
+                'initialPreviewAsData' => true,
+                'initialPreviewFileType' => 'image',
+                'initialCaption' => $model->$attribute,
+                'preferIconicPreview' => true, // 这将强制缩略图按照以下文件扩展名的图标显示
+                'initialPreviewConfig' => [
+                    ['caption' => "Business 1", 'filename' => "Business-1.jpg", 'size' => 762980, 'url' => "/site/file-delete", 'key' => 11],
+                    ['previewAsData' => false, 'size' => 823782, 'caption' => "Business 2", 'filename' => "Business-2.jpg", 'url' => "/site/file-delete", 'key' => 13],
+                    ['caption' => "Lorem Ipsum", 'filename' => "LoremIpsum.txt", 'type '=> "text", 'size' => 1430, 'url' => "/site/file-delete", 'key' => 12],
+                    ['type' => "pdf", 'size' => 8000, 'caption' => "PDF Sample", 'filename' => "PDF-Sample.pdf", 'url' => "/file-upload-batch/2", 'key' => 14],
+                    ['type' => "video", 'size' => 375000, 'filetype' => "video/mp4", 'caption' => "Krajee Sample", 'filename' => "KrajeeSample.mp4", 'url' => "/file-upload-batch/2", 'key' => 15],
+                ],
+                'previewFileIconSettings' => [ // 配置你的文件扩展名对应的图标
+                    'doc' => '<i class="fa fa-file-word-o text-primary"></i>',
+                    'xls' => '<i class="fa fa-file-excel-o text-success"></i>',
+                    'ppt' => '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                    'pdf' => '<i class="fa fa-file-pdf-o text-danger"></i>',
+                    'zip' => '<i class="fa fa-file-archive-o text-muted"></i>',
+                    'htm' => '<i class="fa fa-file-code-o text-info"></i>',
+                    'txt' => '<i class="fa fa-file-text-o text-info"></i>',
+                    'mov' => '<i class="fa fa-file-movie-o text-warning"></i>',
+                    'mp3' => '<i class="fa fa-file-audio-o text-warning"></i>',
+                    // 以下这些文件类型的注释未配置扩展名确定逻辑（键值本身会被用作扩展名）
+                    // has been configured (the keys itself will be used as extensions)
+                    'jpg' => '<i class="fa fa-file-photo-o text-danger"></i>',
+                    'gif' => '<i class="fa fa-file-photo-o text-muted"></i>',
+                    'png' => '<i class="fa fa-file-photo-o text-primary"></i>'
+                ],
+                'previewFileExtSettings' => [ // 配置确定图标文件扩展名的逻辑代码
+                    'doc' => new JsExpression('function(ext) {return ext.match(/(doc|docx)$/i);}'),
+                    'xls' => new JsExpression('function(ext) {return ext.match(/(xls|xlsx)$/i);}'),
+                    'ppt' => new JsExpression('function(ext) {return ext.match(/(ppt|pptx)$/i);}'),
+                    'zip' => new JsExpression('function(ext) {return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);}'),
+                    'htm' => new JsExpression('function(ext) {return ext.match(/(htm|html)$/i);}'),
+                    'txt' => new JsExpression('function(ext) {return ext.match(/(txt|ini|csv|java|php|js|css)$/i);}'),
+                    'mov' => new JsExpression('function(ext) {return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);}'),
+                    'mp3' => new JsExpression('function(ext) {return ext.match(/(mp3|wav)$/i);}'),
+                ],
+                'maxFileSize' => 0,
+            ]
+        ], $clientOptions);
+        return \kartik\file\FileInput::widget($clientOptions);
+    }
+
+    /**
+     * @param array $fileInfo
+     * @return array
+     */
     public static function initialPreview(array $fileInfo)
     {
         $url = sprintf(
@@ -145,6 +239,10 @@ class FormHelper
         return [$url];
     }
 
+    /**
+     * @param array $fileInfo
+     * @return array
+     */
     public static function initialPreviewConfig(array $fileInfo)
     {
         return [

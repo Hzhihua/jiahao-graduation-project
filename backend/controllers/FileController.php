@@ -29,6 +29,17 @@ class FileController extends Controller
         ];
     }
 
+    public function actions()
+    {
+        return array_merge(parent::actions(), [
+            'file-upload' => [
+                'class' => 'hzhihua\actions\FileUploadAction',
+                'attribute' => 'file',
+                'on afterUpload' => [new File(), 'afterFileUpload'],
+            ],
+        ]);
+    }
+
     /**
      * Lists all File models.
      * @return mixed

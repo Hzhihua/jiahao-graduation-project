@@ -5,13 +5,13 @@ use yii\widgets\DetailView;
 use backend\helpers\ColumnsHelper;
 
 /* @var $this yii\web\View */
-/* @var $model common\models\Announcement */
+/* @var $model common\models\Answer */
 
-$this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Announcements'), 'url' => ['index']];
+$this->title = $model->id;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Answers'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="announcement-view">
+<div class="answer-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
@@ -30,16 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'title',
-            [
-                'attribute' => 'picture_id',
-                'format' => 'raw',
-                'value' => function ($model) {
-                    return ColumnsHelper::getPictureHtmlById($model->picture_id);
-                },
-            ],
-            'description',
-            'content:ntext',
+            'answer_name',
+            'answer:ntext',
             [
                 'attribute' => 'created_at',
                 'value' => function ($model) {

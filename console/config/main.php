@@ -21,7 +21,8 @@ return [
             'namespace' => 'common\fixtures',
         ],
         'dump' => [
-            'class' => 'hzhihua\\dump\\DumpController',
+            'class' => 'hzhihua\dump\DumpController',
+            'filePrefix' => '180507_132739',
         ],
     ],
     'components' => [

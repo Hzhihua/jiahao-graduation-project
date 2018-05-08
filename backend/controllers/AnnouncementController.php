@@ -115,8 +115,13 @@ class AnnouncementController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            $file_id = Picture::getIdByFileKey($post['picture_id']);
+            $_POST['Announcement']['picture_id'] = $file_id;
+            if ($model->load($_POST) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [

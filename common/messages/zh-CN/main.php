@@ -21,5 +21,11 @@ return [
     'Student Class' => '学生班级',
     'Created At' => '创建时间',
     'Updated At' => '修改时间',
+
+    'Username' => '名称',
+    'Question' => '咨询内容',
+    'Answer Name' => '回复者',
+    'Answer' => '回复',
+
 ];
 

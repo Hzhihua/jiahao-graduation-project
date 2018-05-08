@@ -90,21 +90,21 @@ class Announcement extends BaseModel
      */
     public function beforeInsert($event)
     {
-        if (! parent::beforeInsert($event)) {
-            return $event->isValid = false;
-        }
-
-        // 判断 picture_id 是否存在
-        if (! self::findPictureById($this->picture_id)) {
-            throw new PDOException('Picture ID('.$this->picture_id.') could not be found in ' . Picture::tableName() . ' table');
-        }
-
-        // 判断 authod_id 是否存在
-        if (! self::findAuthorById($this->author_id)) {
-            throw new PDOException('Author ID('.$this->author_id.') could not be found in ' . Author::tableName() . ' table');
-        }
-
-        return $event->isValid;
+//        if (! parent::beforeInsert($event)) {
+//            return $event->isValid = false;
+//        }
+//
+//        // 判断 picture_id 是否存在
+//        if (! self::findPictureById($this->picture_id)) {
+//            throw new PDOException('Picture ID('.$this->picture_id.') could not be found in ' . Picture::tableName() . ' table');
+//        }
+//
+//        // 判断 authod_id 是否存在
+//        if (! self::findAuthorById($this->author_id)) {
+//            throw new PDOException('Author ID('.$this->author_id.') could not be found in ' . Author::tableName() . ' table');
+//        }
+//
+//        return $event->isValid;
     }
 
     /**
@@ -114,21 +114,21 @@ class Announcement extends BaseModel
      */
     public function beforeUpdate($event)
     {
-        if (! parent::beforeUpdate($event)) {
-            return $event->isValid = false;
-        }
-
-        // 判断 picture_id 是否存在
-        if (! self::findPictureById($this->picture_id)) {
-            throw new PDOException('Picture ID('.$this->picture_id.') could not be found in ' . Picture::tableName() . ' table');
-        }
-
-        // 判断 authod_id 是否存在
-        if (! self::findAuthorById($this->author_id)) {
-            throw new PDOException('Author ID('.$this->author_id.') could not be found in ' . Author::tableName() . ' table');
-        }
-
-        return $event->isValid;
+//        if (! parent::beforeUpdate($event)) {
+//            return $event->isValid = false;
+//        }
+//
+//        // 判断 picture_id 是否存在
+//        if (! self::findPictureById($this->picture_id)) {
+//            throw new PDOException('Picture ID('.$this->picture_id.') could not be found in ' . Picture::tableName() . ' table');
+//        }
+//
+//        // 判断 authod_id 是否存在
+//        if (! self::findAuthorById($this->author_id)) {
+//            throw new PDOException('Author ID('.$this->author_id.') could not be found in ' . Author::tableName() . ' table');
+//        }
+//
+//        return $event->isValid;
     }
 
     /**

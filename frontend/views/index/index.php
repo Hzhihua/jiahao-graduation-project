@@ -7,16 +7,16 @@
 /* @var array $data*/
 use yii\helpers\Url;
 use frontend\assets\AppAsset;
-use common\models\Announcement;
+//use common\models\Announcement;
 
 AppAsset::register($this);
 
-$page = Yii::$app->getRequest()->get('page');
-$page = (int)$page < 1 ? 1 : $page;
-$params = Yii::$app->params;
-$rootDir = '//localhost/jhgp/backend/web/img/temp/';
+//$page = Yii::$app->getRequest()->get('page');
+//$page = (int)$page < 1 ? 1 : $page;
+//$params = Yii::$app->params;
+$rootDir = Yii::$app->params['baseUrl'];
 
-$hasNext = ((int) Announcement::find()->count() - ((int) $page * (int) Yii::$app->params['AnnouncementPageSize'])) > 0 ? true : false;
+//$hasNext = ((int) Announcement::find()->count() - ((int) $page * (int) Yii::$app->params['AnnouncementPageSize'])) > 0 ? true : false;
 
 $this->title = 'Proteus -- 嘉应学院';
 ?>
@@ -26,7 +26,7 @@ $this->title = 'Proteus -- 嘉应学院';
     <div data-am-widget="slider" class="am-slider am-slider-b1" data-am-slider='{&quot;controlNav&quot;:false}' >
         <ul class="am-slides">
             <?php foreach ($data['rollingMap'] as $rollingMap): ?>
-                <li>
+                <li style="height:500px">
                     <img src="<?= $rootDir . $rollingMap['picture']['new_directory'] . '/' .$rollingMap['picture']['new_name'] .'.'. $rollingMap['picture']['extension']; ?>">
                 </li>
             <?php endforeach; ?>
@@ -39,7 +39,7 @@ $this->title = 'Proteus -- 嘉应学院';
 <div class="am-g am-g-fixed blog-fixed">
     <div class="am-u-md-8 am-u-sm-12">
 
-        <?php foreach ($data['announcement'] as $announcement): ?>
+        <?php $announcement = $data['announcement']; ?>
         <article class="am-g blog-entry-article">
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
                 <img width="400" height="192" src="<?= $rootDir . $announcement['picture']['new_directory'] . '/' .$announcement['picture']['new_name'] .'.'. $announcement['picture']['extension']; ?>" alt="预览图" class="am-u-sm-12">
@@ -47,30 +47,47 @@ $this->title = 'Proteus -- 嘉应学院';
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
                 <span> @<?= $announcement['author']['name']; ?> &nbsp;</span>
                 <span><?= date('Y/m/d', $announcement['updated_at']); ?></span>
-                <h1><a href="<?= Url::to(['announcement/index', 'pk' => $announcement['id']])?>"><?= $announcement['title']; ?></a></h1>
+                <h1><a href="<?= Url::to(['announcement/view', 'pk' => $announcement['id']])?>"><?= $announcement['title']; ?></a></h1>
                 <p><?=
                     mb_strlen($announcement['description'], 'utf-8') > 60 ?
                         mb_substr($announcement['description'], 0, 60, 'utf-8') . '...' :
                         $announcement['description'];
                 ?></p>
-                <p><a href="<?= Url::to(['announcement/index', 'pk' => $announcement['id']])?>" class="blog-continue"><?= Yii::t('frontend', 'Read More') ?></a></p>
+                <p><a href="<?= Url::to(['announcement/view', 'pk' => $announcement['id']])?>" class="blog-continue"><?= Yii::t('frontend', 'Read More') ?></a></p>
             </div>
         </article>
-        <?php endforeach; ?>
 
-        <ul class="am-pagination">
-            <?php if ($page > 1): ?>
-            <li class="am-pagination-prev">
-                <a data-pjax=0 href="<?= Url::to(['index', 'page' => $page - 1])?>">&laquo; 上一页</a>
-            </li>
-            <?php endif; ?>
+        <?php $installtion = $data['installation']; ?>
+        <article class="am-g blog-entry-article">
+            <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
+<!--                <img width="400" height="192" src="--><?//= $rootDir . $installtion['picture']['new_directory'] . '/' .$installtion['picture']['new_name'] .'.'. $installtion['picture']['extension']; ?><!--" alt="预览图" class="am-u-sm-12">-->
+            </div>
+            <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
+                <span> @<?= $installtion['author']['name']; ?> &nbsp;</span>
+                <span><?= date('Y/m/d', $installtion['updated_at']); ?></span>
+                <h1><a href="<?= Url::to(['installation/index', 'pk' => $installtion['id']])?>"><?= $installtion['title']; ?></a></h1>
+                <p><?=
+                    mb_strlen($installtion['description'], 'utf-8') > 60 ?
+                        mb_substr($installtion['description'], 0, 60, 'utf-8') . '...' :
+                        $installtion['description'];
+                    ?></p>
+                <p><a href="<?= Url::to(['installation/index', 'pk' => $installtion['id']])?>" class="blog-continue"><?= Yii::t('frontend', 'Read More') ?></a></p>
+            </div>
+        </article>
 
-            <?php if ($hasNext): ?>
-            <li class="am-pagination-next">
-                <a data-pjax=0 href="<?= Url::to(['index', 'page' => $page + 1])?>">下一页 &raquo;</a>
-            </li>
-            <?php endif; ?>
-        </ul>
+<!--        <ul class="am-pagination">-->
+<!--            --><?php //if ($page > 1): ?>
+<!--            <li class="am-pagination-prev">-->
+<!--                <a data-pjax=0 href="--><?//= Url::to(['index', 'page' => $page - 1])?><!--">&laquo; 上一页</a>-->
+<!--            </li>-->
+<!--            --><?php //endif; ?>
+<!---->
+<!--            --><?php //if ($hasNext): ?>
+<!--            <li class="am-pagination-next">-->
+<!--                <a data-pjax=0 href="--><?//= Url::to(['index', 'page' => $page + 1])?><!--">下一页 &raquo;</a>-->
+<!--            </li>-->
+<!--            --><?php //endif; ?>
+<!--        </ul>-->
     </div>
 
     <div class="am-u-md-4 am-u-sm-12 blog-sidebar">

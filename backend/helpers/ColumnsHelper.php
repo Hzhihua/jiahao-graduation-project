@@ -51,7 +51,7 @@ class ColumnsHelper
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @param array $option
      * @return string
      */
@@ -78,7 +78,7 @@ class ColumnsHelper
         if ($data) {
             $url = sprintf(
                 '%s%s/%s.%s',
-                dirname($_SERVER['PHP_SELF']).'/img/temp/',
+                Yii::$app->params['baseUrl'],
                 $data['new_directory'],
                 $data['new_name'],
                 $data['extension']

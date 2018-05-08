@@ -5,12 +5,12 @@ namespace common\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\Picture;
+use common\models\Answer;
 
 /**
- * PictureSearch represents the model behind the search form of `common\models\Picture`.
+ * AnswerSearch represents the model behind the search form of `common\models\Answer`.
  */
-class PictureSearch extends Picture
+class AnswerSearch extends Answer
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class PictureSearch extends Picture
     public function rules()
     {
         return [
-            [['id', 'size', 'created_at', 'updated_at'], 'integer'],
-            [['file_key', 'new_name', 'origin_name', 'extension', 'type', 'new_directory'], 'safe'],
+            [['id', 'created_at', 'updated_at'], 'integer'],
+            [['answer_name', 'answer'], 'safe'],
         ];
     }
 
@@ -41,7 +41,7 @@ class PictureSearch extends Picture
      */
     public function search($params)
     {
-        $query = Picture::find();
+        $query = Answer::find();
 
         // add conditions that should always apply here
 
@@ -60,17 +60,12 @@ class PictureSearch extends Picture
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'size' => $this->size,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'file_key', $this->file_key])
-            ->andFilterWhere(['like', 'new_name', $this->new_name])
-            ->andFilterWhere(['like', 'origin_name', $this->origin_name])
-            ->andFilterWhere(['like', 'extension', $this->extension])
-            ->andFilterWhere(['like', 'type', $this->type])
-            ->andFilterWhere(['like', 'new_directory', $this->new_directory]);
+        $query->andFilterWhere(['like', 'answer_name', $this->answer_name])
+            ->andFilterWhere(['like', 'answer', $this->answer]);
 
         return $dataProvider;
     }

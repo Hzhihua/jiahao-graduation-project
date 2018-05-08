@@ -11,4 +11,5 @@ return [
         'docx',
         'pdf',
     ],
+    'baseUrl' => '//192.168.169.152/jhgp/backend/web/img/temp/',
 ];

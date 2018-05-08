@@ -30,11 +30,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
+            'file_key',
+            'new_name',
+            'origin_name',
+            'size',
+            'extension',
+            'type',
+            'new_directory',
             [
                 'attribute' => 'url',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return ColumnsHelper::getPictureHtml($model->url);
+                    static $baseUrl = '';
+                    if (!$baseUrl) $baseUrl = Yii::$app->params['baseUrl'];;
+                    return ColumnsHelper::getPictureHtml(sprintf(
+                        '%s%s/%s.%s',
+                        $baseUrl,
+                        $model->new_directory,
+                        $model->new_name,
+                        $model->extension
+                    ));
                 },
             ],
             [

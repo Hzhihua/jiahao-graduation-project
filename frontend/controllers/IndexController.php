@@ -7,8 +7,8 @@
 
 namespace frontend\controllers;
 
+use common\models\Installation;
 use common\models\Links;
-use Yii;
 use common\models\Announcement;
 use common\models\RollingMap;
 use yii\web\Controller;
@@ -26,17 +26,22 @@ class IndexController extends Controller
     /**
      * 网站首页
      */
+    /**
+     * @return string
+     */
     public function actionIndex()
     {
-        $links = self::getLinks();
-        $picture = self::getRollingMap();
-        $announcement = self::getAnnouncement(Yii::$app->getRequest()->get('page'));
+        $links = static::getLinks();
+        $picture = static::getRollingMap();
+        $announcement = static::getAnnouncement();
+        $installation = static::getInstallation();
 
         return $this->render('index', [
             'data' => [
                 'links' => $links,
                 'rollingMap' => $picture, // 轮播图
                 'announcement' => $announcement,
+                'installation' => $installation,
             ],
         ]);
     }
@@ -52,17 +57,27 @@ class IndexController extends Controller
 
     /**
      * 获取公告内容
-     * @param $page
      * @return array|\yii\db\ActiveRecord[]
      */
-    public static function getAnnouncement($page)
+    public static function getAnnouncement()
     {
-        $paseSize = Yii::$app->params['AnnouncementPageSize'];
-        $page = (int)$page < 1 ? 1 : $page;
-        $offset = ($page - 1) * $paseSize;
-        $end = $page * $paseSize;
+//        $paseSize = Yii::$app->params['AnnouncementPageSize'];
+//        $page = (int)$page < 1 ? 1 : $page;
+//        $offset = ($page - 1) * $paseSize;
+//        $end = $page * $paseSize;
 
-        return Announcement::find()->orderBy(['updated_at' => SORT_DESC])->offset($offset)->limit($end)->with('author', 'picture')->asArray()->all();
+        return Announcement::find()->orderBy(['updated_at' => SORT_DESC])->limit(1)->with('author', 'picture')->asArray()->one();
+    }
+
+    /**
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public static function getInstallation()
+    {
+        $data =  Installation::find()->orderBy(['updated_at' => SORT_DESC])->limit(1)->with('author')->asArray()->one();
+        $data['description'] = mb_substr(strip_tags($data['content']), 0, 250, 'utf-8');
+
+        return $data;
     }
 
     /**

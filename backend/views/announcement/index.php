@@ -31,12 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'title',
             [
-                'attribute' => 'author_id',
-                'value' => function ($model) {
-                    return ColumnsHelper::getAuthorNameById($model->author_id);
-                },
-            ],
-            [
                 'attribute' => 'picture_id',
                 'format' => 'raw',
                 'value' => function ($model) {

@@ -17,10 +17,10 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a(sprintf('%s%s',
-            Yii::t('backend', 'Create'),
-            Yii::t('backend', 'Picture')
-        ), ['create'], ['class' => 'btn btn-success']) ?>
+<!--        --><?//= Html::a(sprintf('%s%s',
+//            Yii::t('backend', 'Create'),
+//            Yii::t('backend', 'Picture')
+//        ), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -30,10 +30,25 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             [
-                'attribute' => 'url',
+                'attribute' => 'origin_name',
                 'format' => 'raw',
                 'value' => function ($model) {
-                    return ColumnsHelper::getPictureHtml($model->url);
+                    return Html::a($model->origin_name, \yii\helpers\Url::to(['update', 'id' => $model->id]));
+                },
+            ],
+            [
+                'attribute' => '图片',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    static $baseUrl = '';
+                    if (!$baseUrl) $baseUrl = Yii::$app->params['baseUrl'];;
+                    return ColumnsHelper::getPictureHtml(sprintf(
+                        '%s%s/%s.%s',
+                        $baseUrl,
+                        $model->new_directory,
+                        $model->new_name,
+                        $model->extension
+                    ));
                 },
             ],
             [

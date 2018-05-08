@@ -34,4 +34,7 @@ return [
     'Update' => '编辑',
     'Delete' => '删除',
 
+    'Answer' => '回复',
+    'Answers' => '回复管理',
+
 ];
