@@ -16,7 +16,7 @@ class m180507_132739_2_key_upload_work extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%upload_work}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%upload_work}}', 'id', 'integer', 'unsigned', 8);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%upload_work}}', 'id', 'integer', 'unsigned', 11);
 
     }
 

@@ -6,25 +6,28 @@
  */
 
 /* @var $this \yii\web\View */
+/* @var $data array */
+use yii\helpers\Url;
 use frontend\assets\AppAsset;
 
 AppAsset::register($this);
 $this->title = Yii::t('frontend', 'Videos');
+$baseUrl = rtrim(Yii::$app->params['baseUrl'], '/') . '/';
 
 ?>
 
 <!-- content start -->
 <div class="am-g am-g-fixed blog-fixed blog-content">
     <ul class="list-unstyled video-list-thumbs row">
-        <?php for ($i=0; $i<5; $i++): ?>
+        <?php foreach($data as $value): ?>
         <li class="col-lg-3 col-sm-4 col-xs-6">
-            <a href="#" title="Claudio Bravo, antes su debut con el Barça en la Liga">
-                <img src="http://i.ytimg.com/vi/ZKOtE9DOwGE/mqdefault.jpg" alt="Barca" class="img-responsive" height="130px">
-                <h2>Claudio Bravo, antes su debut con el Barça en la Liga</h2>
+            <a data-pjax="0" href="<?= Url::to(['view', 'id' => $value['file_key']]) ?>" title="<?= $value['origin_name'] ?>">
+                <img src="<?= $baseUrl . $value['picture_url'] ?>" alt="<?= $value['origin_name']?>" class="img-responsive" height="130px">
+                <h2><?= $value['origin_name'] ?></h2>
                 <span class="glyphicon glyphicon-play-circle"></span>
             </a>
         </li>
-        <?php endfor; ?>
+        <?php endforeach; ?>
     </ul>
 </div>
 <!-- content end -->

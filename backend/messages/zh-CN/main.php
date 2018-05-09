@@ -37,4 +37,6 @@ return [
     'Answer' => '回复',
     'Answers' => '回复管理',
 
+    'Media' => '媒体',
+    'Medias' => '媒体管理',
 ];

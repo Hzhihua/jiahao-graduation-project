@@ -35,8 +35,22 @@ class RollingMapController extends Controller
         return [
             'image-upload' => [
                 'class' => 'hzhihua\actions\FileUploadAction',
+                'seeDirectory' => Yii::$app->params['baseUrl'],
+                'uploadDirectory' => Yii::$app->params['baseDirectory'],
+                'deleteAction' => 'image-delete',
+                'downloadAction' => 'image-download',
                 'on beforeUpload' => [new Picture(), 'beforeImageUpload'],
                 'on afterUpload' => [new Picture(), 'afterImageUpload'],
+//                'responseFormat' => 'json',
+            ],
+            'image-delete' => [
+                'class' => 'hzhihua\actions\FileDeleteAction',
+                'on beforeDelete' => [new Picture(), 'beforeImageDelete'],
+//                'on afterDelete' => [new Picture(), 'afterImageDelete'],
+            ],
+            'image-download' => [
+                'class' => 'hzhihua\actions\FileDownloadAction',
+                'on beforeDownload' => [new Picture(), 'beforeImageDownload'],
 //                'responseFormat' => 'json',
             ],
         ];
@@ -104,8 +118,13 @@ class RollingMapController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if (Yii::$app->request->isPost) {
+            $post = Yii::$app->request->post();
+            $file_id = Picture::getIdByFileKey($post['picture_id']);
+            $_POST['RollingMap']['picture_id'] = $file_id;
+            if ($model->load($_POST) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         return $this->render('update', [
@@ -122,7 +141,17 @@ class RollingMapController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $baseDirectory = rtrim(Yii::$app->params['baseDirectory'], '/') . '/';
+        $data = Picture::find()->where(['id' => $model->id])->asArray()->one();
+        @unlink(sprintf(
+            '%s%s/%s.%s',
+            $baseDirectory,
+            $data['new_directory'],
+            $data['new_name'],
+            $data['extension']
+        ));
+        $model->delete();
 
         return $this->redirect(['index']);
     }

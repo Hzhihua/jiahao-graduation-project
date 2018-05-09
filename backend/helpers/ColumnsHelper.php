@@ -7,12 +7,14 @@
 
 namespace backend\helpers;
 
+use common\models\Media;
 use Yii;
 use yii\helpers\Html;
 use common\models\File;
 use common\models\Picture;
 use common\models\Author;
 use common\models\StudentClass;
+use yii\helpers\Url;
 
 class ColumnsHelper
 {
@@ -111,13 +113,15 @@ class ColumnsHelper
      */
     public static function getFileHtmlById($file_id, $option = [])
     {
-        $data = File::find()
-            ->select(['name', 'url'])
+        $data = Media::find()
+            ->select(['file_key', 'origin_name', 'extension'])
             ->where(['id' => (int) $file_id])
             ->asArray()
             ->one();
+        $url = Url::to(['file-download', 'file_key' => $data['file_key']]);
+        $name = $data['origin_name'] . '.' . $data['extension'];
 
-        return static::getFileHtml($data['name'], $data['url'], $option);
+        return static::getFileHtml($name, $url, $option);
     }
 
     /**

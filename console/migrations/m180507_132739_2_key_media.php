@@ -3,11 +3,11 @@
 use hzhihua\dump\Migration;
 
 /**
- * Class m180507_132739_2_key_announcement
+ * Class m180507_132739_2_key_media
  * @property \yii\db\Transaction $_transaction
  * @Github https://github.com/Hzhihua
  */
-class m180507_132739_2_key_announcement extends Migration
+class m180507_132739_2_key_media extends Migration
 {
     /**
      * @inheritdoc
@@ -15,9 +15,9 @@ class m180507_132739_2_key_announcement extends Migration
     public function safeUp()
     {
         
-        $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%announcement}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%announcement}}', 'id', 'integer', 'unsigned', 4);
-        $this->runSuccess['picture_id'] = $this->createIndex('picture_id', '{{%announcement}}', 'picture_id', 0);
+        $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%media}}', 'id');
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%media}}', 'id', 'integer', '', 19);
+        $this->runSuccess['file_key'] = $this->createIndex('file_key', '{{%media}}', 'file_key', 1);
 
     }
 
@@ -36,9 +36,9 @@ class m180507_132739_2_key_announcement extends Migration
                     $value = $this->runSuccess['addAutoIncrement'];
                     $this->dropAutoIncrement("{$value['table_name']}", $value['column_name'], $value['column_type'], $value['property']);
                 }
-                $this->dropPrimaryKey(null, '{{%announcement}}');
+                $this->dropPrimaryKey(null, '{{%media}}');
             } elseif (!empty($keyName)) {
-                $this->dropIndex("`$keyName`", '{{%announcement}}');
+                $this->dropIndex("`$keyName`", '{{%media}}');
             }
         }
 

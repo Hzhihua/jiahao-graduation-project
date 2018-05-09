@@ -36,6 +36,8 @@ class AnnouncementController extends Controller
         return [
             'image-upload' => [
                 'class' => 'hzhihua\actions\FileUploadAction',
+                'seeDirectory' => Yii::$app->params['baseUrl'],
+                'uploadDirectory' => Yii::$app->params['baseDirectory'],
                 'on beforeUpload' => [new Picture(), 'beforeImageUpload'],
                 'on afterUpload' => [new Picture(), 'afterImageUpload'],
 //                'responseFormat' => 'json',

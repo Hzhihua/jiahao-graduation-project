@@ -7,8 +7,6 @@
 
 namespace backend\helpers;
 
-use common\models\File;
-use common\models\Picture;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\Url;
@@ -17,6 +15,7 @@ use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use common\models\Author;
+use common\models\Picture;
 
 class FormHelper
 {
@@ -122,7 +121,7 @@ class FormHelper
                 'browseOnZoneClick' => true, // 点击打开文件选择
                 'uploadAsync' => true, // ajax异步上传
                 'uploadUrl' => Url::to(['image-upload']), // 上传URL
-                'deleteUrl' => Url::to(['image-delete']),
+//                'deleteUrl' => Url::to(['image-delete']),
                 'previewFileType' => 'image/*',
                 'initialPreview' => isset($fileInfo) ? static::initialPreview($fileInfo) : [],
                 'overwriteInitial' => false,
@@ -138,7 +137,7 @@ class FormHelper
     }
 
     /**
-     * 文件资源上传
+     * 媒体资源上传
      * @param ActiveForm $form
      * @param $model
      * @param $attribute
@@ -146,19 +145,19 @@ class FormHelper
      * @return string
      * @throws \Exception
      */
-    public static function FileUpload(ActiveForm $form, $model, $attribute, array $clientOptions = [])
+    public static function MediaUpload(ActiveForm $form, $model, $attribute, array $clientOptions = [])
     {
-//        $inputId = static::getInputId();
+        $inputId = static::getInputId();
         $alertMsg = 'Are you sure you want to delete this file?';
         $clientOptions = ArrayHelper::merge([
-            'name' => 'file',
+            'name' => 'media',
             'options'=>[
                 'multiple' => false,
                 'accept' => 'all',
             ],
             'pluginEvents' => [
                 'filepredelete' => 'function (jqXHR) {var abort = true;if (confirm("'.$alertMsg.'")) {abort = false;}return abort;}',
-                // 'fileuploaded' => 'function (event, data) {var key = data.response.file_key;$("#'.$inputId.'").val(key)}'
+                 'fileuploaded' => 'function (event, data) {var key = data.response.file_key;$("#'.$inputId.'").val(key)}'
             ],
 
             'pluginOptions' => [
@@ -167,30 +166,13 @@ class FormHelper
                 'uploadUrl' => Url::to(['file-upload']), // 上传URL
                 'deleteUrl' => Url::to(['file-delete']),
 //                'previewFileType' => 'image',
-                'initialPreview' => [
-                    // 图像数据
-                    'http://lorempixel.com/800/460/business/1',
-                    // 图像原生标记语言
-                    '<img src="http://lorempixel.com/800/460/business/2" class="kv-preview-data file-preview-image" style="height:160px">',
-                    // 文本数据
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut mauris ut libero fermentum feugiat eu et dui. Mauris condimentum rhoncus enim, sed semper neque vestibulum id. Nulla semper, turpis ut consequat imperdiet, enim turpis aliquet orci, eget venenatis elit sapien non ante. Aliquam neque ipsum, rhoncus id ipsum et, volutpat tincidunt augue. Maecenas dolor libero, gravida nec est at, commodo tempor massa. Sed id feugiat massa. Pellentesque at est eu ante aliquam viverra ac sed est.",
-                    // PDF数据
-                    'http://kartik-v.github.io/bootstrap-fileinput-samples/samples/pdf-sample.pdf',
-                    // 视频数据
-                    "http://kartik-v.github.io/bootstrap-fileinput-samples/samples/small.mp4",
-                ],
+                'initialPreview' => [],
                 'overwriteInitial' => false,
                 'initialPreviewAsData' => true,
                 'initialPreviewFileType' => 'image',
                 'initialCaption' => $model->$attribute,
                 'preferIconicPreview' => true, // 这将强制缩略图按照以下文件扩展名的图标显示
-                'initialPreviewConfig' => [
-                    ['caption' => "Business 1", 'filename' => "Business-1.jpg", 'size' => 762980, 'url' => "/site/file-delete", 'key' => 11],
-                    ['previewAsData' => false, 'size' => 823782, 'caption' => "Business 2", 'filename' => "Business-2.jpg", 'url' => "/site/file-delete", 'key' => 13],
-                    ['caption' => "Lorem Ipsum", 'filename' => "LoremIpsum.txt", 'type '=> "text", 'size' => 1430, 'url' => "/site/file-delete", 'key' => 12],
-                    ['type' => "pdf", 'size' => 8000, 'caption' => "PDF Sample", 'filename' => "PDF-Sample.pdf", 'url' => "/file-upload-batch/2", 'key' => 14],
-                    ['type' => "video", 'size' => 375000, 'filetype' => "video/mp4", 'caption' => "Krajee Sample", 'filename' => "KrajeeSample.mp4", 'url' => "/file-upload-batch/2", 'key' => 15],
-                ],
+                'initialPreviewConfig' => [],
                 'previewFileIconSettings' => [ // 配置你的文件扩展名对应的图标
                     'doc' => '<i class="fa fa-file-word-o text-primary"></i>',
                     'xls' => '<i class="fa fa-file-excel-o text-success"></i>',
@@ -220,7 +202,8 @@ class FormHelper
                 'maxFileSize' => 0,
             ]
         ], $clientOptions);
-        return \kartik\file\FileInput::widget($clientOptions);
+//        return \kartik\file\FileInput::widget($clientOptions);
+        return static::upload($form, $model, $attribute, $clientOptions);
     }
 
     /**
@@ -231,7 +214,7 @@ class FormHelper
     {
         $url = sprintf(
             '%s%s/%s.%s',
-            dirname($_SERVER['PHP_SELF']).'/img/temp/',
+            rtrim(Yii::$app->params['baseUrl'], '/') . '/',
             $fileInfo['new_directory'],
             $fileInfo['new_name'],
             $fileInfo['extension']

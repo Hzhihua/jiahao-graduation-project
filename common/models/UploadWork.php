@@ -78,48 +78,48 @@ class UploadWork extends BaseModel
      * @param \yii\base\ModelEvent $event
      * @return bool
      */
-    public function beforeInsert($event)
-    {
-        if (! parent::beforeInsert($event)) {
-            return $event->isValid = false;
-        }
-
-        // 判断 file_id 是否存在
-        if (! self::findFileById($this->file_id)) {
-            throw new PDOException('File ID('.$this->file_id.') could not be found in '.File::tableName().' table');
-        }
-
-        // 判断 student_class_id 是否存在
-        if (! self::findStudentClassById($this->student_class_id)) {
-            throw new PDOException('StudentClass ID('.$this->student_class_id.') could not be found in '.StudentClass::tableName().' table');
-        }
-
-        return $event->isValid;
-    }
+//    public function beforeInsert($event)
+//    {
+//        if (! parent::beforeInsert($event)) {
+//            return $event->isValid = false;
+//        }
+//
+//        // 判断 file_id 是否存在
+//        if (! self::findFileById($this->file_id)) {
+//            throw new PDOException('File ID('.$this->file_id.') could not be found in '.File::tableName().' table');
+//        }
+//
+//        // 判断 student_class_id 是否存在
+//        if (! self::findStudentClassById($this->student_class_id)) {
+//            throw new PDOException('StudentClass ID('.$this->student_class_id.') could not be found in '.StudentClass::tableName().' table');
+//        }
+//
+//        return $event->isValid;
+//    }
 
     /**
      * 在数据修改之前调用
      * @param \yii\base\ModelEvent $event
      * @return bool
      */
-    public function beforeUpdate($event)
-    {
-        if (! parent::beforeUpdate($event)) {
-            return $event->isValid = false;
-        }
-
-        // 判断 file_id 是否存在
-        if (! self::findFileById($this->file_id)) {
-            throw new PDOException('File ID('.$this->file_id.') could not be found in '.File::tableName().' table');
-        }
-
-        // 判断 student_class_id 是否存在
-        if (! self::findStudentClassById($this->student_class_id)) {
-            throw new PDOException('StudentClass ID('.$this->student_class_id.') could not be found in '.StudentClass::tableName().' table');
-        }
-
-        return $event->isValid;
-    }
+//    public function beforeUpdate($event)
+//    {
+//        if (! parent::beforeUpdate($event)) {
+//            return $event->isValid = false;
+//        }
+//
+//        // 判断 file_id 是否存在
+//        if (! self::findFileById($this->file_id)) {
+//            throw new PDOException('File ID('.$this->file_id.') could not be found in '.File::tableName().' table');
+//        }
+//
+//        // 判断 student_class_id 是否存在
+//        if (! self::findStudentClassById($this->student_class_id)) {
+//            throw new PDOException('StudentClass ID('.$this->student_class_id.') could not be found in '.StudentClass::tableName().' table');
+//        }
+//
+//        return $event->isValid;
+//    }
 
     /**
      * 判断 file_id 是否存在

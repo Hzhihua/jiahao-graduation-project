@@ -27,5 +27,8 @@ return [
     'Answer Name' => '回复者',
     'Answer' => '回复',
 
+    'Picture Url' => '预览图',
+    'Type' => '类型',
+
 ];
 

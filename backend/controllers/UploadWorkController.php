@@ -8,6 +8,7 @@ use common\models\UploadWorkSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\Media;
 
 /**
  * UploadWorkController implements the CRUD actions for UploadWork model.
@@ -21,12 +22,22 @@ class UploadWorkController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
         ];
+    }
+
+    public function actions()
+    {
+        return array_merge(parent::actions(), [
+            'file-download' => [
+                'class' => 'hzhihua\actions\FileDownloadAction',
+                'on beforeDownload' => [new Media(), 'beforeMediaDownload'],
+            ],
+        ]);
     }
 
     /**

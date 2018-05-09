@@ -30,17 +30,17 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@frontend/views/layo
 <body id="blog-article-sidebar">
 <?php $this->beginBody() ?>
     <div style="min-height: 80%">
-    <?php Pjax::begin([
-        'timeout' => 30000, // 设置ajax请求超时时间（ms）
-        // 'scrollTo' => 0,
-        // 'linkSelector' => 'a[data-pjax!=0]',
-        'formSelector' => 'form',
-        'clientOptions' => [
-            // 'cache' => false, // 解决ie缓存问题 在url请求地址中添加"_=123456"参数
-            'container' => '#pjax-container', // 容器，这里的所有内容会被ajax请求的内容替换
-            // 'fragment' => 'section.content', // 片段，从请求的内容中提取<section class="content">内容替换掉container中的内容(这里是：#pjax-container)
-        ],
-    ]); ?>
+<!--    --><?php //Pjax::begin([
+//        'timeout' => 30000, // 设置ajax请求超时时间（ms）
+//        // 'scrollTo' => 0,
+//        // 'linkSelector' => 'a[data-pjax!=0]',
+//        'formSelector' => 'form',
+//        'clientOptions' => [
+//            // 'cache' => false, // 解决ie缓存问题 在url请求地址中添加"_=123456"参数
+//            'container' => '#pjax-container', // 容器，这里的所有内容会被ajax请求的内容替换
+//            // 'fragment' => 'section.content', // 片段，从请求的内容中提取<section class="content">内容替换掉container中的内容(这里是：#pjax-container)
+//        ],
+//    ]); ?>
 
     <?= $this->render(
         'nav.php',
@@ -54,7 +54,7 @@ $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@frontend/views/layo
         );?>
     </div>
 
-    <?php Pjax::end(); ?>
+<!--    --><?php //Pjax::end(); ?>
     </div>
 
     <?= $this->render(

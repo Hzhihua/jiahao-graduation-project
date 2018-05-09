@@ -8,61 +8,41 @@
 /* @var $this \yii\web\View*/
 /* @var array $studentClass */
 use yii\helpers\Url;
-use frontend\assets\UploadWorksAsset;
+use yii\widgets\ActiveForm;
+use yii\helpers\Html;
+use frontend\helpers\FormHelper;
+//use frontend\assets\UploadWorksAsset;
 
 // 注册静态文件
-UploadWorksAsset::register($this);
+//UploadWorksAsset::register($this);
+\frontend\assets\AppAsset::register($this);
 $this->title = '作业提交';
 
 $params = Yii::$app->params;
-$ext = implode($params['uploadFileExtension'], '/');
-$url = Url::to(['/upload-works/upload']);
-$_csrf = Yii::$app->getRequest()->csrfToken;
-$tip = Yii::t('frontend', 'Select or Drag file to upload');
-$uploadTip = Yii::t('frontend', 'Exceeded file upload limit');
-$js = <<<JS
-$(function(){
-    $('#upload').html5SliceUpload({
-      ajax_timeout: 60000,
-      url:'{$url}',
-      _csrf: '{$_csrf}',
-      buttonText:'{$tip}({$ext})',
-      onNumEnough: function(num){
-        alert('{$uploadTip}: '+num);
-      }
-    });
-});
-JS;
-
-// 显示一个额外的信息，如提交成功，上传文件未选择
-$js .= $message;
-
-// 注册js
-$this->registerJs($js);
+//$ext = implode($params['uploadFileExtension'], '/');
+//$url = Url::to(['/upload-works/upload']);
+//$_csrf = Yii::$app->getRequest()->csrfToken;
 
 ?>
 
 <!-- content start -->
-<div class="am-g am-g-fixed blog-fixed blog-content">
+<div class="am-g am-g-fixed blog-fixed blog-content" data-pjax=0>
     <div class="am-u-sm-12">
         <article class="am-article blog-article-p">
-            <form action="<?= Url::to(['/upload-works/post']) ?>" method="post">
-                <input type="hidden" name="<?= Yii::$app->getRequest()->csrfParam ?>" value="<?= Yii::$app->getRequest()->csrfToken ?>">
-                <?= Yii::t('frontend', 'Student\'s Name') ?>：<input type="text" name="form[student_name]"><br />
-                <?= Yii::t('frontend', 'Class') ?>：
-                <select name="form[student_class_id]">
-                    <option value=""><?= Yii::t('frontend', 'Please select a class') ?></option>
-                    <?php foreach ($studentClass as $value): ?>
-                        <option value="<?= $value['id']; ?>"><?= $value['class_name']; ?></option>
-                    <?php endforeach; ?>
-                </select>
-                <br />
-                <div class="am-article-hd">
-                    <div id="dropFile"><div id="upload"></div></div>
-                    <ol id="showFileList"></ol>
-                    <input type="submit" value="提交">
-                </div>
-            </form>
+            <?php $form = ActiveForm::begin(['action' => Url::to(['create'])]); ?>
+
+            <?= $form->field($model, 'student_name')->textInput(['maxlength' => true]) ?>
+
+            <?= FormHelper::studenClassSelectize($form, $model, 'student_class_id') ?>
+
+            <?= FormHelper::MediaUpload($form, $model, 'file_id') ?>
+
+            <div class="form-group">
+                <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
+
         </article>
     </div>
 </div>

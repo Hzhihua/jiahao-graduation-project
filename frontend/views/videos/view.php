@@ -10,8 +10,10 @@ use hzhihua\videojs\VideoJsWidget;
 
 /* @var $this \yii\web\View  */
 
+use yii\helpers\Html;
+
 AppAsset::register($this);
-$this->title = Yii::t('frontend', 'Videos');
+$this->title = Html::encode($data['origin_name']);
 
 $css = <<<'CSS'
     #videojs-w0 {
@@ -20,13 +22,16 @@ $css = <<<'CSS'
 CSS;
 
 $this->registerCss($css);
+
+$baseUrl = rtrim(Yii::$app->params['baseUrl'], '/') . '/';
+
 ?>
 
 <?= VideoJsWidget::widget([
     'options' => [  // video tag attibutes
         'class' => 'video-js vjs-default-skin vjs-big-play-centered',
         'title' => $this->title,
-        'poster' => "//vjs.zencdn.net/v/oceans.png",  // 视频播放封面地址
+        'poster' => $baseUrl . $data['picture_url'],  // 视频播放封面地址
         'controls' => true, // 显示控制页面
         'preload' => false,
         'playsinline' => true, // 禁止在iPhone Safari中自动全屏   ios10以后版本
@@ -35,6 +40,7 @@ $this->registerCss($css);
         'loop' => false, // 循环播放
         'hidden' => false, // 是否隐藏
         'width' => '1200',
+        'playbackRateMenuButton' => true,
 //            'height' => '500',
         'data' => [
             'setup' => [
@@ -79,15 +85,9 @@ $this->registerCss($css);
 //                ],
 //            ],
     ],
-    'initFunction' => '
-        function () {
-            console.log(this);
-        }
-    ',
     'tags' => [
         'source' => [
-            ['src' => '//vjs.zencdn.net/v/oceans.mp4', 'type' => 'video/mp4'],
-            ['src' => 'audio.mp3', 'type' => 'audio/mp3'],
+            ['src' => $baseUrl . $data['new_directory'] . '/' . $data['new_name'] .'.'. $data['extension'], 'type' => $data['type']],
         ],
         'p' => [
             ['content' => '您的浏览器不支持html5视频播放'],
