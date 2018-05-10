@@ -18,6 +18,7 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
+            'loginUrl' => ['/rolling-map'],
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],

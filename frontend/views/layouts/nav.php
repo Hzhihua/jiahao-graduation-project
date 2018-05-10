@@ -56,7 +56,7 @@ $weekDay = '星期' . $weekArray[date('w')];
             <li <?= !isset($select[1]) ?: $select[1]; ?>><a href="<?= Url::to(['/introduction/index'])?>"><?= Yii::t('frontend', 'Introduction')?></a></li>
             <li <?= !isset($select[2]) ?: $select[2]; ?>><a href="<?= Url::to(['/installation/index'])?>"><?= Yii::t('frontend', 'Installation')?></a></li>
             <li <?= !isset($select[3]) ?: $select[3]; ?>><a href="<?= Url::to(['/communication/index'])?>"><?= Yii::t('frontend', 'Communication')?></a></li>
-            <li <?= !isset($select[4]) ?: $select[4]; ?>><a href="<?= Url::to(['/announcement/index'])?>"><?= Yii::t('frontend', 'Announcement')?></a></li>
+            <li <?= !isset($select[4]) ?: $select[4]; ?>><a href="<?= Url::to(['/announcement/index'])?>"><?= Yii::t('frontend', '课程动态')?></a></li>
             <li <?= !isset($select[5]) ?: $select[5]; ?>><a href="<?= Url::to(['/videos/index'])?>"><?= Yii::t('frontend', 'Videos')?></a></li>
             <li <?= !isset($select[6]) ?: $select[6]; ?>><a href="<?= Url::to(['/upload-works/index'])?>"><?= Yii::t('frontend', 'Upload Works')?></a></li>
         </ul>
