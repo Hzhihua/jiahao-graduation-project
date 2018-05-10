@@ -61,7 +61,7 @@ $this->title = 'Proteus -- 嘉应学院';
         <?php if ($installtion = $data['installation']): ?>
         <article class="am-g blog-entry-article">
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
-<!--                <img width="400" height="192" src="--><?//= $rootDir . $installtion['picture']['new_directory'] . '/' .$installtion['picture']['new_name'] .'.'. $installtion['picture']['extension']; ?><!--" alt="预览图" class="am-u-sm-12">-->
+                <img width="400" height="192" src="<?= $rootDir . 'picture.jpg'; ?>" alt="预览图" class="am-u-sm-12">
             </div>
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
 <!--                <span> @--><?//= $installtion['author']['name']; ?><!-- &nbsp;</span>-->
