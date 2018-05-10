@@ -14,7 +14,7 @@ class InstallationController extends Controller
 {
     public function actionIndex()
     {
-        $data = Installation::find()->limit(1)->with('author')->asArray()->one();
+        $data = Installation::find()->orderBy(['id' => SORT_DESC, 'updated_at' => SORT_DESC])->limit(1)->with('author')->asArray()->one();
         return $this->render('index', [
             'data' => $data,
         ]);

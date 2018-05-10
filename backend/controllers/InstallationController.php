@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Picture;
 use Yii;
 use common\models\Installation;
 use common\models\InstallationSearch;
@@ -27,6 +28,33 @@ class InstallationController extends Controller
                 ],
             ],
         ];
+    }
+
+    /**
+     * @param $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action)
+    {
+        if ($action->id === 'ckeditor-image-upload') {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
+
+    /**
+     * @return array
+     */
+    public function actions()
+    {
+        return array_merge(parent::actions(), [
+            'ckeditor-image-upload' => [
+                'class' => 'hzhihua\actions\FileUploadAction',
+                'attribute' => 'upload',
+                'on afterUpload' => [new Picture(), 'afterImageUploadCKeditor'],
+            ],
+        ]);
     }
 
     /**

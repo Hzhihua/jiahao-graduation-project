@@ -13,7 +13,13 @@ use backend\helpers\FormHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= FormHelper::editor($form, $model,'content') ?>
+    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+
+    <?= $this->render('_ckeditor', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'content',
+    ]) ?>
 
     <?= FormHelper::authorSelectize($form, $model, 'author_id') ?>
 

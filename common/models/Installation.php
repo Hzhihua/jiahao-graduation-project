@@ -46,10 +46,12 @@ class Installation extends BaseModel
     {
         return array_merge(Model::scenarios(), [
             'insert' => [
+                'title',
                 'content',
                 'author_id',
             ],
             'update' => [
+                'title',
                 'content',
                 'author_id',
             ],

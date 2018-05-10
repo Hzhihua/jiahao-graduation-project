@@ -3,16 +3,17 @@
 namespace backend\controllers;
 
 use Yii;
-use common\models\Picture;
-use common\models\PictureSearch;
+use common\models\Introduction;
+use common\models\IntroductionSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\Picture;
 
 /**
- * PictureController implements the CRUD actions for Picture model.
+ * IntroductionController implements the CRUD actions for Introduction model.
  */
-class PictureController extends Controller
+class IntroductionController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -21,7 +22,7 @@ class PictureController extends Controller
     {
         return [
             'verbs' => [
-                'class' => VerbFilter::className(),
+                'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
                 ],
@@ -30,29 +31,39 @@ class PictureController extends Controller
     }
 
     /**
+     * @param $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action)
+    {
+        if ($action->id === 'ckeditor-image-upload') {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
+
+    /**
      * @return array
      */
     public function actions()
     {
-        return [
-            'image-upload' => [
-                'class' => 'backend\actions\FileUploadAction',
-                'model' => 'common\models\Picture',
-                'attribute' => 'picture',
+        return array_merge(parent::actions(), [
+            'ckeditor-image-upload' => [
+                'class' => 'hzhihua\actions\FileUploadAction',
+                'attribute' => 'upload',
+                'on afterUpload' => [new Picture(), 'afterImageUploadCKeditor'],
             ],
-            'image-delete' => [
-                'class' => 'backend\actions\ImageDeleteAction',
-            ],
-        ];
+        ]);
     }
 
     /**
-     * Lists all Picture models.
+     * Lists all Introduction models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new PictureSearch();
+        $searchModel = new IntroductionSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -62,8 +73,8 @@ class PictureController extends Controller
     }
 
     /**
-     * Displays a single Picture model.
-     * @param integer $id
+     * Displays a single Introduction model.
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -75,27 +86,27 @@ class PictureController extends Controller
     }
 
     /**
-     * Creates a new Picture model.
+     * Creates a new Introduction model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-//    public function actionCreate()
-//    {
-//        $model = new Picture();
-//
-//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-//            return $this->redirect(['view', 'id' => $model->id]);
-//        }
-//
-//        return $this->render('create', [
-//            'model' => $model,
-//        ]);
-//    }
+    public function actionCreate()
+    {
+        $model = new Introduction();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
 
     /**
-     * Updates an existing Picture model.
+     * Updates an existing Introduction model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+     * @param string $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -113,11 +124,13 @@ class PictureController extends Controller
     }
 
     /**
-     * Deletes an existing Picture model.
+     * Deletes an existing Introduction model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
@@ -127,15 +140,15 @@ class PictureController extends Controller
     }
 
     /**
-     * Finds the Picture model based on its primary key value.
+     * Finds the Introduction model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param integer $id
-     * @return Picture the loaded model
+     * @param string $id
+     * @return Introduction the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Picture::findOne($id)) !== null) {
+        if (($model = Introduction::findOne($id)) !== null) {
             return $model;
         }
 

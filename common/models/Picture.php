@@ -194,6 +194,32 @@ class Picture extends BaseModel
 
     /**
      * @param Event $event
+     * @throws \Throwable
+     */
+    public function afterImageUploadCKeditor(Event $event)
+    {
+        $this->afterImageUpload($event);
+        /**
+         * @see https://docs.ckeditor.com/ckeditor4/latest/guide/dev_file_upload.html
+         */
+        $event->sender->setResponseBody([
+            'uploaded' => 1,
+            'fileName' => $event->file->baseName,
+            'url' => sprintf(
+                '%s/%s/%s.%s',
+                rtrim(Yii::$app->params['baseUrl'], '/'),
+                rtrim($event->sender->newDirectory, '/'),
+                $event->sender->newName,
+                $event->file->extension
+            ),
+//            'error' => [
+//                'message' => ''
+//            ]
+        ]);
+    }
+
+    /**
+     * @param Event $event
      */
     public function beforeImageDelete(Event $event)
     {

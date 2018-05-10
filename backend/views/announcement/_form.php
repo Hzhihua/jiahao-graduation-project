@@ -25,7 +25,11 @@ use backend\helpers\FormHelper;
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $this->render('_ckeditor', [
+        'form' => $form,
+        'model' => $model,
+        'attribute' => 'content',
+    ]) ?>
 
     <div class="form-group">
         <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>

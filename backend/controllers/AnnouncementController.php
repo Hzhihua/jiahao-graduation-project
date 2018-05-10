@@ -30,7 +30,22 @@ class AnnouncementController extends Controller
             ],
         ];
     }
+    /**
+     * @param $action
+     * @return bool
+     * @throws \yii\web\BadRequestHttpException
+     */
+    public function beforeAction($action)
+    {
+        if ($action->id === 'ckeditor-image-upload') {
+            $this->enableCsrfValidation = false;
+        }
+        return parent::beforeAction($action);
+    }
 
+    /**
+     * @return array
+     */
     public function actions()
     {
         return [
@@ -51,6 +66,11 @@ class AnnouncementController extends Controller
                 'class' => 'hzhihua\actions\FileDownloadAction',
                 'on beforeDownload' => [new Picture(), 'beforeImageDownload'],
 //                'responseFormat' => 'json',
+            ],
+            'ckeditor-image-upload' => [ // ckeditor picture upload
+                'class' => 'hzhihua\actions\FileUploadAction',
+                'attribute' => 'upload',
+                'on afterUpload' => [new Picture(), 'afterImageUploadCKeditor'],
             ],
         ];
     }

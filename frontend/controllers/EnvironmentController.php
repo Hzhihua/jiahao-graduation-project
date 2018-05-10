@@ -14,7 +14,7 @@ class EnvironmentController extends Controller
 {
     public function actionIndex()
     {
-        $data = Environment::find()->limit(1)->with('author')->asArray()->one();
+        $data = Environment::find()->orderBy(['id' => SORT_DESC, 'updated_at' => SORT_DESC])->limit(1)->with('author')->asArray()->one();
 
         return $this->render('index', [
             'data' => $data,

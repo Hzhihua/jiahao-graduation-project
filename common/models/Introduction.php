@@ -46,10 +46,12 @@ class Introduction extends BaseModel
     {
         return array_merge(Model::scenarios(), [
             'insert' => [
+                'title',
                 'content',
                 'author_id',
             ],
             'update' => [
+                'title',
                 'content',
                 'author_id',
             ],
@@ -63,6 +65,7 @@ class Introduction extends BaseModel
     {
         return [
             'id' => 'ID',
+            'title' => Yii::t('common', 'Title'),
             'content' => Yii::t('common', 'Content'),
             'author_id' => Yii::t('common', 'Author'),
             'created_at' => Yii::t('common', 'Created At'),

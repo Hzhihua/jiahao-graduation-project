@@ -52,7 +52,7 @@ class IndexController extends Controller
      */
     public static function getRollingMap()
     {
-        return RollingMap::find()->orderBy(['updated_at' => SORT_DESC])->limit(5)->with('picture')->asArray()->all();
+        return RollingMap::find()->orderBy(['id' => SORT_DESC, 'updated_at' => SORT_DESC])->limit(5)->with('picture')->asArray()->all();
     }
 
     /**
@@ -66,7 +66,7 @@ class IndexController extends Controller
 //        $offset = ($page - 1) * $paseSize;
 //        $end = $page * $paseSize;
 
-        return Announcement::find()->orderBy(['updated_at' => SORT_DESC])->limit(1)->with('author', 'picture')->asArray()->one();
+        return Announcement::find()->orderBy(['id' => SORT_DESC, 'updated_at' => SORT_DESC])->limit(1)->with('author', 'picture')->asArray()->one();
     }
 
     /**
@@ -74,7 +74,7 @@ class IndexController extends Controller
      */
     public static function getInstallation()
     {
-        $data =  Installation::find()->orderBy(['updated_at' => SORT_DESC])->limit(1)->with('author')->asArray()->one();
+        $data =  Installation::find()->orderBy(['id' => SORT_DESC, 'updated_at' => SORT_DESC])->limit(1)->with('author')->asArray()->one();
         if ($data)
             $data['description'] = mb_substr(strip_tags($data['content']), 0, 250, 'utf-8');
 
@@ -87,6 +87,6 @@ class IndexController extends Controller
      */
     public static function getLinks()
     {
-        return Links::find()->orderBy(['updated_at' => SORT_DESC])->asArray()->all();
+        return Links::find()->orderBy(['id' => SORT_DESC, 'updated_at' => SORT_DESC])->asArray()->all();
     }
 }
