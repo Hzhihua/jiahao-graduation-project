@@ -39,7 +39,7 @@ $this->title = 'Proteus -- 嘉应学院';
 <div class="am-g am-g-fixed blog-fixed">
     <div class="am-u-md-8 am-u-sm-12">
 
-        <?php $announcement = $data['announcement']; ?>
+        <?php if ($announcement = $data['announcement']): ?>
         <article class="am-g blog-entry-article">
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
                 <img width="400" height="192" src="<?= $rootDir . $announcement['picture']['new_directory'] . '/' .$announcement['picture']['new_name'] .'.'. $announcement['picture']['extension']; ?>" alt="预览图" class="am-u-sm-12">
@@ -56,8 +56,9 @@ $this->title = 'Proteus -- 嘉应学院';
                 <p><a href="<?= Url::to(['announcement/view', 'pk' => $announcement['id']])?>" class="blog-continue"><?= Yii::t('frontend', 'Read More') ?></a></p>
             </div>
         </article>
+        <?php endif;?>
 
-        <?php $installtion = $data['installation']; ?>
+        <?php if ($installtion = $data['installation']): ?>
         <article class="am-g blog-entry-article">
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
 <!--                <img width="400" height="192" src="--><?//= $rootDir . $installtion['picture']['new_directory'] . '/' .$installtion['picture']['new_name'] .'.'. $installtion['picture']['extension']; ?><!--" alt="预览图" class="am-u-sm-12">-->
@@ -74,6 +75,7 @@ $this->title = 'Proteus -- 嘉应学院';
                 <p><a href="<?= Url::to(['installation/index', 'pk' => $installtion['id']])?>" class="blog-continue"><?= Yii::t('frontend', 'Read More') ?></a></p>
             </div>
         </article>
+        <?php endif;?>
 
 <!--        <ul class="am-pagination">-->
 <!--            --><?php //if ($page > 1): ?>

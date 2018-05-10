@@ -10,7 +10,7 @@ use yii\helpers\Html;
 use yii\widgets\Pjax;
 use frontend\components\nprogress\NProgressAsset;
 
-NProgressAsset::register($this); // show pjax progress at the top
+//NProgressAsset::register($this); // show pjax progress at the top
 
 $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@frontend/views/layouts');
 ?>
