@@ -77,19 +77,6 @@ $this->title = 'Proteus -- 嘉应学院';
         </article>
         <?php endif;?>
 
-<!--        <ul class="am-pagination">-->
-<!--            --><?php //if ($page > 1): ?>
-<!--            <li class="am-pagination-prev">-->
-<!--                <a data-pjax=0 href="--><?//= Url::to(['index', 'page' => $page - 1])?><!--">&laquo; 上一页</a>-->
-<!--            </li>-->
-<!--            --><?php //endif; ?>
-<!---->
-<!--            --><?php //if ($hasNext): ?>
-<!--            <li class="am-pagination-next">-->
-<!--                <a data-pjax=0 href="--><?//= Url::to(['index', 'page' => $page + 1])?><!--">下一页 &raquo;</a>-->
-<!--            </li>-->
-<!--            --><?php //endif; ?>
-<!--        </ul>-->
     </div>
 
     <div class="am-u-md-4 am-u-sm-12 blog-sidebar">

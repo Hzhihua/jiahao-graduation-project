@@ -75,7 +75,8 @@ class IndexController extends Controller
     public static function getInstallation()
     {
         $data =  Installation::find()->orderBy(['updated_at' => SORT_DESC])->limit(1)->with('author')->asArray()->one();
-        $data['description'] = mb_substr(strip_tags($data['content']), 0, 250, 'utf-8');
+        if ($data)
+            $data['description'] = mb_substr(strip_tags($data['content']), 0, 250, 'utf-8');
 
         return $data;
     }
