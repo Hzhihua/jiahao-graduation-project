@@ -10,9 +10,8 @@ namespace frontend\controllers;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
-use common\models\Media;
+use common\models\File;
 use common\models\UploadWork;
-use yii\web\NotFoundHttpException;
 
 /**
  * Class UploadWorksController
@@ -46,20 +45,20 @@ class UploadWorksController extends Controller
         return array_merge(parent::actions(), [
             'file-upload' => [
                 'class' => 'hzhihua\actions\FileUploadAction',
-                'attribute' => 'media',
+                'attribute' => 'file',
                 'seeDirectory' => Yii::$app->params['baseUrl'],
                 'uploadDirectory' => Yii::$app->params['baseDirectory'],
-                'on afterUpload' => [new Media(), 'afterMediaUpload'],
+                'on afterUpload' => [new File(), 'afterFileUpload'],
 //                'responseFormat' => 'json',
             ],
             'file-delete' => [
                 'class' => 'hzhihua\actions\FileDeleteAction',
-                'on beforeDelete' => [new Media(), 'beforeMediaDelete'],
-//                'on afterDelete' => [new Media(), 'afterMediaDelete'],
+                'on beforeDelete' => [new File(), 'beforeFileDelete'],
+//                'on afterDelete' => [new File(), 'afterFileDelete'],
             ],
             'file-download' => [
                 'class' => 'hzhihua\actions\FileDownloadAction',
-                'on beforeDownload' => [new Media(), 'beforeMediaDownload'],
+                'on beforeDownload' => [new File(), 'beforeFileDownload'],
 //                'responseFormat' => 'json',
             ],
         ]);
@@ -74,9 +73,7 @@ class UploadWorksController extends Controller
     }
 
     /**
-     * @param $id
      * @return string|\yii\web\Response
-     * @throws NotFoundHttpException
      */
     public function actionCreate()
     {
@@ -84,7 +81,7 @@ class UploadWorksController extends Controller
 
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            $file_id = Media::getIdByFileKey($post['file_id']);
+            $file_id = File::getIdByFileKey($post['file_id']);
             $_POST['UploadWork']['file_id'] = $file_id;
             if ($model->load($_POST) && $model->save()) {
                 echo '<script>alert("提交成功")</script>';

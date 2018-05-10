@@ -7,7 +7,6 @@
 
 namespace backend\helpers;
 
-use common\models\Media;
 use Yii;
 use yii\helpers\Html;
 use common\models\File;
@@ -113,7 +112,7 @@ class ColumnsHelper
      */
     public static function getFileHtmlById($file_id, $option = [])
     {
-        $data = Media::find()
+        $data = File::find()
             ->select(['file_key', 'origin_name', 'extension'])
             ->where(['id' => (int) $file_id])
             ->asArray()

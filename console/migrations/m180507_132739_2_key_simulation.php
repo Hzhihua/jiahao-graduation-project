@@ -16,7 +16,7 @@ class m180507_132739_2_key_simulation extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%simulation}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%simulation}}', 'id', 'integer', 'unsigned', 3);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%simulation}}', 'id', 'integer', 'unsigned', 0);
 
     }
 

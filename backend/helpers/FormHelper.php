@@ -145,12 +145,12 @@ class FormHelper
      * @return string
      * @throws \Exception
      */
-    public static function MediaUpload(ActiveForm $form, $model, $attribute, array $clientOptions = [])
+    public static function FileUpload(ActiveForm $form, $model, $attribute, array $clientOptions = [])
     {
         $inputId = static::getInputId();
         $alertMsg = 'Are you sure you want to delete this file?';
         $clientOptions = ArrayHelper::merge([
-            'name' => 'media',
+            'name' => 'file',
             'options'=>[
                 'multiple' => false,
                 'accept' => 'all',

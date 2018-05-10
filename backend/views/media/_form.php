@@ -15,7 +15,7 @@ use backend\helpers\FormHelper;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= FormHelper::MediaUpload($form, $model, 'file_key') ?>
+    <?= FormHelper::FileUpload($form, $model, 'file_key') ?>
 
     <?php ActiveForm::end(); ?>
 

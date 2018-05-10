@@ -16,7 +16,7 @@ class m180507_132739_2_key_introduction extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%introduction}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%introduction}}', 'id', 'integer', 'unsigned', 2);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%introduction}}', 'id', 'integer', 'unsigned', 0);
 
     }
 

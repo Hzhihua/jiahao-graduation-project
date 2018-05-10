@@ -41,7 +41,7 @@ class UploadWorkSearch extends UploadWork
      */
     public function search($params)
     {
-        $query = UploadWork::find();
+        $query = UploadWork::find()->with('file');
 
         // add conditions that should always apply here
 

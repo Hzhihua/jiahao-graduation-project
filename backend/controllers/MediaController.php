@@ -35,7 +35,7 @@ class MediaController extends Controller
         return array_merge(parent::actions(), [
             'file-upload' => [
                 'class' => 'hzhihua\actions\FileUploadAction',
-                'attribute' => 'media',
+                'attribute' => 'file',
                 'deleteAction' => 'file-delete',
                 'downloadAction' => 'file-download',
                 'seeDirectory' => Yii::$app->params['baseUrl'],

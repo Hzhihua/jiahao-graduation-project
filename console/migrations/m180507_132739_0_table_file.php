@@ -16,15 +16,18 @@ class m180507_132739_0_table_file extends Migration
     {
         
         $this->runSuccess['createTable'] = $this->createTable('{{%file}}', [
-            'id' => $this->integer(11)->unsigned()->notNull(),
-            'name' => $this->string(255)->notNull()->comment('上传文件的名称'),
-            'size' => $this->integer(11)->unsigned()->notNull()->comment('上传文件的大小(单位：字节)'),
-            'url' => $this->string(255)->notNull()->comment('文件url地址(ltrim(/))'),
-            'created_at' => $this->integer(10)->unsigned()->notNull()->comment('创建时间'),
-            'updated_at' => $this->integer(10)->unsigned()->notNull()->comment('修改时间'),
+            'id' => $this->integer(11)->notNull(),
+            'new_name' => $this->string(255)->notNull()->comment('名称'),
+            'origin_name' => $this->string(255)->notNull()->comment('原始名称'),
+            'new_directory' => $this->string(255)->notNull()->comment('新目录(a/b/c)'),
+            'extension' => $this->string(20)->notNull()->comment('拓展名'),
+            'type' => $this->string(50)->notNull()->comment('MIME type'),
+            'size' => $this->integer(11)->notNull()->comment('文件大小'),
+            'file_key' => $this->string(255)->notNull()->comment('文件key参数'),
+            'created_at' => $this->integer(11)->notNull()->comment('创建时间'),
         ], $this->tableOptions);
 
-        $this->runSuccess['addTableComment'] = $this->addCommentOnTable('{{%file}}', '上传文件表');
+        $this->runSuccess['addTableComment'] = $this->addCommentOnTable('{{%file}}', '文件表');
 
     }
 

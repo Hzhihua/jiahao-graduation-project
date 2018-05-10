@@ -16,7 +16,7 @@ class m180507_132739_2_key_author extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%author}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%author}}', 'id', 'integer', '', 2);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%author}}', 'id', 'integer', '', 0);
 
     }
 

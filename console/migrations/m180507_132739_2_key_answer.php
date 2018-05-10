@@ -16,7 +16,7 @@ class m180507_132739_2_key_answer extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%answer}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%answer}}', 'id', 'integer', '', 7);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%answer}}', 'id', 'integer', '', 0);
 
     }
 

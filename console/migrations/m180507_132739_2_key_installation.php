@@ -16,7 +16,7 @@ class m180507_132739_2_key_installation extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%installation}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%installation}}', 'id', 'integer', 'unsigned', 2);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%installation}}', 'id', 'integer', 'unsigned', 0);
 
     }
 

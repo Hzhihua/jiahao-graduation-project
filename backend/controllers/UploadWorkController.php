@@ -8,7 +8,7 @@ use common\models\UploadWorkSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use common\models\Media;
+use common\models\File;
 
 /**
  * UploadWorkController implements the CRUD actions for UploadWork model.
@@ -35,7 +35,7 @@ class UploadWorkController extends Controller
         return array_merge(parent::actions(), [
             'file-download' => [
                 'class' => 'hzhihua\actions\FileDownloadAction',
-                'on beforeDownload' => [new Media(), 'beforeMediaDownload'],
+                'on beforeDownload' => [new File(), 'beforeFileDownload'],
             ],
         ]);
     }
@@ -109,9 +109,11 @@ class UploadWorkController extends Controller
     /**
      * Deletes an existing UploadWork model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param string $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {

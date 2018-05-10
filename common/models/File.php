@@ -3,24 +3,27 @@
 namespace common\models;
 
 use Yii;
-use yii\base\Exception;
-use yii\base\Model;
-use yii\base\ModelEvent;
+use hzhihua\actions\Event;
+use hzhihua\actions\UploadedFile;
 
 /**
- * This is the model class for table "{{%file}}".
+ * This is the model class for table "{{%media}}".
  *
  * @property int $id
- * @property string $name 上传文件的名称
- * @property int $size 上传文件的大小(单位：字节)
- * @property string $url 文件url地址
- * @property string $created_at 创建时间
- * @property string $updated_at 修改时间
+ * @property int $picture_url 封面图url
+ * @property string $new_name 视频名称
+ * @property string $origin_name 视频原始名称
+ * @property string $new_directory 新目录(a/b/c)
+ * @property string $extension 拓展名
+ * @property string $type MIME type
+ * @property int $size 文件大小
+ * @property string $file_key 文件key参数
+ * @property int $created_at 创建时间
  */
-class File extends BaseModel
+class File extends \yii\db\ActiveRecord
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public static function tableName()
     {
@@ -28,98 +31,119 @@ class File extends BaseModel
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['name', 'url', 'size', 'created_at', 'updated_at'], 'required'],
-            [['size'], 'integer'],
-            [['created_at', 'updated_at'], 'integer'],
-            [['name', 'url'], 'string', 'max' => 255],
+            [['new_name', 'origin_name', 'new_directory', 'extension', 'type', 'size', 'file_key'], 'required'],
+            [['size', 'created_at'], 'integer'],
+            [['new_name', 'origin_name', 'new_directory', 'file_key'], 'string', 'max' => 255],
+            [['extension'], 'string', 'max' => 20],
+            [['type'], 'string', 'max' => 50],
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function scenarios()
+    public function behaviors()
     {
-        return array_merge(Model::scenarios(), [
-            'insert' => [
-                'name',
-                'size',
-                'url',
-            ],
-            'update' => [
-                'name',
-                'size',
-                'url',
+        return array_merge(parent::behaviors(), [
+            [
+                'class' => 'yii\behaviors\TimestampBehavior',
+                'updatedAtAttribute' => false,
             ],
         ]);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => Yii::t('common', 'Name'),
+            'id' => Yii::t('common', 'ID'),
+            'new_name' => Yii::t('common', 'New Name'),
+            'origin_name' => Yii::t('common', 'Origin Name'),
+            'new_directory' => Yii::t('common', 'New Directory'),
+            'extension' => Yii::t('common', 'Extension'),
+            'type' => Yii::t('common', 'Type'),
             'size' => Yii::t('common', 'Size'),
-            'url' => Yii::t('common', 'Url'),
+            'file_key' => Yii::t('common', 'File Key'),
             'created_at' => Yii::t('common', 'Created At'),
-            'updated_at' => Yii::t('common', 'Updated At'),
         ];
     }
 
     /**
-     * 在添加数据之前调用
-     * @param ModelEvent $event
-     * @return bool
-     * @throws Exception
+     * @param Event $event
+     * @throws \Throwable
      */
-    public function beforeInsert($event)
+    public function afterFileUpload(Event $event)
     {
-        if (! parent::beforeInsert($event)) {
-            return $event->isValid = false;
-        }
 
-        $params = Yii::$app->params;
-        $params['uploadFileRoot'] = rtrim($params['uploadFileRoot'], '/');
-        $file = $params['uploadFileRoot'] . DIRECTORY_SEPARATOR . $this->url;
+        $this->size = $event->file->size;
+        $this->type = $event->file->type;
+        $this->extension = $event->file->extension;
+        $this->origin_name = $event->file->baseName;
+        $this->file_key = $event->sender->fileKey;
+        $this->new_name = $event->sender->newName;
+        $this->new_directory = $event->sender->newDirectory;
 
-        if (empty($this->size)) {
-            throw new Exception('File size is zero Bytes at \'' . $file . '\'');
-        }
+//        $event->sender->initialPreview = [
+//            Yii::$app->params['baseUrl'] . $event->sender->newDirectory . '/' . $event->sender->newName . '.' . $event->file->extension,
+//        ];
+        $event->sender->initialPreviewConfig = [[
+//            'type' => 'video',
+            'fileType' => $event->file->type,
+            'filename' => $event->file->name,
+            'caption' => $event->file->baseName,
+            'size' => $event->file->size,
+            'downloadUrl' => $event->sender->getDownloadUrl(), // download url
+            'url' => $event->sender->getDeleteUrl(), // delete url
+        ]];
 
-        if (! is_file($file)) {
-            throw new Exception('File could not be found at \'' . $file . '\'');
-        }
+        $event->isValid = static::validate() && static::insert();
 
-        return $event->isValid;
     }
 
     /**
-     * 在添加数据之前调用
-     * @param ModelEvent $event
-     * @return bool
-     * @throws Exception
+     * @param Event $event
      */
-    public function beforeUpdate($event)
+    public function beforeFileDownload(Event $event)
     {
-        if (! parent::beforeUpdate($event)) {
-            return $event->isValid = false;
-        }
+        $data = static::find()->where(['file_key' => $event->fileKey])->asArray()->one();
 
-        $params = Yii::$app->params;
-        $params['uploadFileRoot'] = rtrim($params['uploadFileRoot'], '/');
-        $file = $params['uploadFileRoot'] . DIRECTORY_SEPARATOR . $this->url;
-        if (! is_file($file)) {
-            throw new Exception('File could not be found at \'' . $file . '\'');
-        }
+        if ($data) {
+            $file = new UploadedFile();
+            $file->type = $data['type'];
+            $file->size = (int) $data['size'];
+            $file->extension = $data['extension'];
 
-        return $event->isValid;
+            $file->baseName = $data['origin_name'];
+            $file->name = $data['origin_name'] . '.' . $data['extension'];
+
+            $event->sender->newName = $data['new_name'];
+            $event->sender->newDirectory = $data['new_directory'];
+            $event->file = $file;
+        } else {
+            $event->isValid = false;
+        }
     }
+
+    /**
+     * @param Event $event
+     */
+    public function beforeFileDelete(Event $event)
+    {
+        $this->beforeFileDownload($event);
+    }
+
+    /**
+     * @param $key
+     * @return int
+     */
+    public static function getIdByFileKey($key)
+    {
+        $data = static::find()->select('id')->where(['file_key' => $key])->asArray()->one();
+        return (int) $data['id'];
+    }
+
 }

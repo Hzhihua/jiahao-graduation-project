@@ -30,7 +30,7 @@ class AnnouncementController extends Controller
     public function actionView($pk)
     {
         $pk = (int)$pk;
-        $data = Announcement::find()->where($pk)->with('author', 'picture')->asArray()->one();
+        $data = Announcement::find()->where(['id' => $pk])->with('author', 'picture')->asArray()->one();
         return $this->render('view', [
             'data' => $data,
         ]);

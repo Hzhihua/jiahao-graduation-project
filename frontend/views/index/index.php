@@ -14,7 +14,7 @@ AppAsset::register($this);
 //$page = Yii::$app->getRequest()->get('page');
 //$page = (int)$page < 1 ? 1 : $page;
 //$params = Yii::$app->params;
-$rootDir = Yii::$app->params['baseUrl'];
+$rootDir = rtrim(Yii::$app->params['baseUrl'], '/') . '/';
 
 //$hasNext = ((int) Announcement::find()->count() - ((int) $page * (int) Yii::$app->params['AnnouncementPageSize'])) > 0 ? true : false;
 
@@ -45,7 +45,7 @@ $this->title = 'Proteus -- 嘉应学院';
                 <img width="400" height="192" src="<?= $rootDir . $announcement['picture']['new_directory'] . '/' .$announcement['picture']['new_name'] .'.'. $announcement['picture']['extension']; ?>" alt="预览图" class="am-u-sm-12">
             </div>
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
-                <span> @<?= $announcement['author']['name']; ?> &nbsp;</span>
+<!--                <span> @--><?//= $announcement['author']['name']; ?><!-- &nbsp;</span>-->
                 <span><?= date('Y/m/d', $announcement['updated_at']); ?></span>
                 <h1><a href="<?= Url::to(['announcement/view', 'pk' => $announcement['id']])?>"><?= $announcement['title']; ?></a></h1>
                 <p><?=
@@ -63,7 +63,7 @@ $this->title = 'Proteus -- 嘉应学院';
 <!--                <img width="400" height="192" src="--><?//= $rootDir . $installtion['picture']['new_directory'] . '/' .$installtion['picture']['new_name'] .'.'. $installtion['picture']['extension']; ?><!--" alt="预览图" class="am-u-sm-12">-->
             </div>
             <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
-                <span> @<?= $installtion['author']['name']; ?> &nbsp;</span>
+<!--                <span> @--><?//= $installtion['author']['name']; ?><!-- &nbsp;</span>-->
                 <span><?= date('Y/m/d', $installtion['updated_at']); ?></span>
                 <h1><a href="<?= Url::to(['installation/index', 'pk' => $installtion['id']])?>"><?= $installtion['title']; ?></a></h1>
                 <p><?=

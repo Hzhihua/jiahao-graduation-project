@@ -16,7 +16,7 @@ class m180507_132739_2_key_media extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%media}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%media}}', 'id', 'integer', '', 19);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%media}}', 'id', 'integer', '', 0);
         $this->runSuccess['file_key'] = $this->createIndex('file_key', '{{%media}}', 'file_key', 1);
 
     }

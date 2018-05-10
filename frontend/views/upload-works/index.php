@@ -35,7 +35,7 @@ $params = Yii::$app->params;
 
             <?= FormHelper::studenClassSelectize($form, $model, 'student_class_id') ?>
 
-            <?= FormHelper::MediaUpload($form, $model, 'file_id') ?>
+            <?= FormHelper::FileUpload($form, $model, 'file_id') ?>
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('backend', 'Save'), ['class' => 'btn btn-success']) ?>

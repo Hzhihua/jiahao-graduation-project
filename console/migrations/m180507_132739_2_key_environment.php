@@ -16,7 +16,7 @@ class m180507_132739_2_key_environment extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%environment}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%environment}}', 'id', 'integer', 'unsigned', 2);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%environment}}', 'id', 'integer', 'unsigned', 0);
 
     }
 
