@@ -164,7 +164,7 @@ class FormHelper
             ],
             'pluginEvents' => [
                 'filepredelete' => 'function (jqXHR) {var abort = true;if (confirm("'.$alertMsg.'")) {abort = false;}return abort;}',
-                 'fileuploaded' => 'function (event, data) {var key = data.response.file_key;$("#'.$inputId.'").val(key)}'
+                 'fileuploaded' => 'function (event, data) {var key = data.response.file_key;$("#'.$inputId.'").val(key);}'
             ],
 
             'pluginOptions' => [

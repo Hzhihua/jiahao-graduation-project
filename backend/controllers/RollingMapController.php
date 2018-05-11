@@ -96,7 +96,7 @@ class RollingMapController extends Controller
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $file_id = Picture::getIdByFileKey($post['picture_id']);
-            $_POST['RollingMap']['picture_id'] = $file_id;
+            $file_id && $_POST['RollingMap']['picture_id'] = $file_id;
             if ($model->load($_POST) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -121,7 +121,7 @@ class RollingMapController extends Controller
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $file_id = Picture::getIdByFileKey($post['picture_id']);
-            $_POST['RollingMap']['picture_id'] = $file_id;
+            $file_id && $_POST['RollingMap']['picture_id'] = $file_id;
             if ($model->load($_POST) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

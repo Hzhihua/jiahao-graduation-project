@@ -82,7 +82,7 @@ class UploadWorksController extends Controller
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
             $file_id = File::getIdByFileKey($post['file_id']);
-            $_POST['UploadWork']['file_id'] = $file_id;
+            $file_id && $_POST['UploadWork']['file_id'] = $file_id;
             if ($model->load($_POST) && $model->save()) {
                 echo '<script>alert("提交成功")</script>';
             }

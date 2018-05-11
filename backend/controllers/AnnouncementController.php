@@ -140,8 +140,8 @@ class AnnouncementController extends Controller
             $post = Yii::$app->request->post();
             $picture_id = Picture::getIdByFileKey($post['picture_id']);
             $file_id = File::getIdByFileKey($post['file_id']);
-            $_POST['Announcement']['picture_id'] = $picture_id;
-            $_POST['Announcement']['file_id'] = $file_id;
+            $picture_id && $_POST['Announcement']['picture_id'] = $picture_id;
+            $file_id && $_POST['Announcement']['file_id'] = $file_id;
             if ($model->load($_POST) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -167,8 +167,8 @@ class AnnouncementController extends Controller
             $post = Yii::$app->request->post();
             $picture_id = Picture::getIdByFileKey($post['picture_id']);
             $file_id = File::getIdByFileKey($post['file_id']);
-            $_POST['Announcement']['picture_id'] = $picture_id;
-            $_POST['Announcement']['file_id'] = $file_id;
+            $picture_id && $_POST['Announcement']['picture_id'] = $picture_id;
+            $file_id && $_POST['Announcement']['file_id'] = $file_id;
             if ($model->load($_POST) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
