@@ -16,7 +16,7 @@ class m180507_132739_2_key_rolling_map extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%rolling_map}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%rolling_map}}', 'id', 'integer', 'unsigned', 0);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%rolling_map}}', 'id', 'integer', 'unsigned', 3);
 
     }
 

@@ -16,7 +16,7 @@ class m180507_132739_2_key_user extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%user}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%user}}', 'id', 'integer', '', 0);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%user}}', 'id', 'integer', 'unsigned', 0);
         $this->runSuccess['username'] = $this->createIndex('username', '{{%user}}', 'username', 1);
         $this->runSuccess['email'] = $this->createIndex('email', '{{%user}}', 'email', 1);
         $this->runSuccess['password_reset_token'] = $this->createIndex('password_reset_token', '{{%user}}', 'password_reset_token', 1);

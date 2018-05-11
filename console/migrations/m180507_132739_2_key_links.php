@@ -16,7 +16,7 @@ class m180507_132739_2_key_links extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%links}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%links}}', 'id', 'integer', 'unsigned', 0);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%links}}', 'id', 'integer', 'unsigned', 2);
 
     }
 

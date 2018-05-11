@@ -16,7 +16,7 @@ class m180507_132739_0_table_answer extends Migration
     {
         
         $this->runSuccess['createTable'] = $this->createTable('{{%answer}}', [
-            'id' => $this->integer(11)->notNull(),
+            'id' => $this->integer(11)->unsigned()->notNull(),
             'answer_name' => $this->string(255)->notNull()->comment('回答者名称'),
             'answer' => $this->text()->notNull()->comment('回答内容'),
             'created_at' => $this->integer(11)->notNull()->comment('创建时间'),

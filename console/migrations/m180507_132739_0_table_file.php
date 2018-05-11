@@ -16,7 +16,7 @@ class m180507_132739_0_table_file extends Migration
     {
         
         $this->runSuccess['createTable'] = $this->createTable('{{%file}}', [
-            'id' => $this->integer(11)->notNull(),
+            'id' => $this->integer(11)->unsigned()->notNull(),
             'new_name' => $this->string(255)->notNull()->comment('名称'),
             'origin_name' => $this->string(255)->notNull()->comment('原始名称'),
             'new_directory' => $this->string(255)->notNull()->comment('新目录(a/b/c)'),

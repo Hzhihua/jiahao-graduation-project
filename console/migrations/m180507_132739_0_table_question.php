@@ -16,7 +16,7 @@ class m180507_132739_0_table_question extends Migration
     {
         
         $this->runSuccess['createTable'] = $this->createTable('{{%question}}', [
-            'id' => $this->integer(11)->notNull(),
+            'id' => $this->integer(11)->unsigned()->notNull(),
             'username' => $this->string(255)->notNull()->comment('提问者名称'),
             'question' => $this->text()->notNull()->comment('提问内容'),
             'answer_id' => $this->integer(11)->null()->comment('回答内容'),

@@ -16,7 +16,7 @@ class m180507_132739_0_table_author extends Migration
     {
         
         $this->runSuccess['createTable'] = $this->createTable('{{%author}}', [
-            'id' => $this->integer(11)->notNull(),
+            'id' => $this->integer(11)->unsigned()->notNull(),
             'name' => $this->string(255)->notNull()->comment('名称'),
             'created_at' => $this->integer(10)->unsigned()->notNull()->comment('创建时间'),
             'updated_at' => $this->integer(10)->unsigned()->notNull()->comment('修改时间'),

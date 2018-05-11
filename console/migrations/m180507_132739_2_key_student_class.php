@@ -16,7 +16,7 @@ class m180507_132739_2_key_student_class extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%student_class}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%student_class}}', 'id', 'integer', 'unsigned', 0);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%student_class}}', 'id', 'integer', 'unsigned', 4);
 
     }
 

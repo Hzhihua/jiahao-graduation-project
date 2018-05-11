@@ -16,7 +16,7 @@ class m180507_132739_0_table_user extends Migration
     {
         
         $this->runSuccess['createTable'] = $this->createTable('{{%user}}', [
-            'id' => $this->integer(11)->notNull(),
+            'id' => $this->integer(11)->unsigned()->notNull(),
             'username' => $this->string(255)->notNull(),
             'auth_key' => $this->string(32)->notNull(),
             'password_hash' => $this->string(255)->notNull(),

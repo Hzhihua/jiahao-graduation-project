@@ -16,7 +16,7 @@ class m180507_132739_2_key_file extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%file}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%file}}', 'id', 'integer', '', 0);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%file}}', 'id', 'integer', 'unsigned', 20);
         $this->runSuccess['file_key'] = $this->createIndex('file_key', '{{%file}}', 'file_key', 1);
 
     }

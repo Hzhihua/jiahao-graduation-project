@@ -16,7 +16,7 @@ class m180507_132739_2_key_announcement extends Migration
     {
         
         $this->runSuccess['PRIMARY'] = $this->addPrimaryKey(null, '{{%announcement}}', 'id');
-        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%announcement}}', 'id', 'integer', 'unsigned', 0);
+        $this->runSuccess['addAutoIncrement'] = $this->addAutoIncrement('{{%announcement}}', 'id', 'integer', 'unsigned', 6);
         $this->runSuccess['picture_id'] = $this->createIndex('picture_id', '{{%announcement}}', 'picture_id', 0);
 
     }

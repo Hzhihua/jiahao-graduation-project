@@ -20,6 +20,7 @@ class m180507_132739_0_table_announcement extends Migration
             'title' => $this->string(255)->notNull()->comment('公告标题'),
             'author_id' => $this->integer(11)->unsigned()->notNull()->comment('发布人ID'),
             'picture_id' => $this->integer(10)->unsigned()->notNull()->comment('公告预览图'),
+            'file_id' => $this->integer(11)->notNull()->defaultValue(0)->comment('附件ID'),
             'description' => $this->string(255)->notNull()->comment('公告简介'),
             'content' => $this->text()->notNull()->comment('公告内容'),
             'created_at' => $this->integer(10)->unsigned()->notNull()->comment('创建时间'),
