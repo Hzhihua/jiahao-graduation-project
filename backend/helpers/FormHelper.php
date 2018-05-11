@@ -14,6 +14,7 @@ use yii\helpers\Html;
 use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use common\models\File;
 use common\models\Author;
 use common\models\Picture;
 
@@ -147,6 +148,12 @@ class FormHelper
      */
     public static function FileUpload(ActiveForm $form, $model, $attribute, array $clientOptions = [])
     {
+        $fileKey = Yii::$app->request->post($attribute);
+        if ($fileKey) {
+            $fileInfo = File::getInfoByFileKey($fileKey);
+        } elseif ($model->id) {
+            $fileInfo = File::find()->where(['id' => $model->file_id])->asArray()->one();
+        }
         $inputId = static::getInputId($attribute);
         $alertMsg = 'Are you sure you want to delete this file?';
         $clientOptions = ArrayHelper::merge([
@@ -166,13 +173,13 @@ class FormHelper
                 'uploadUrl' => Url::to(['file-upload']), // 上传URL
                 'deleteUrl' => Url::to(['file-delete']),
 //                'previewFileType' => 'image',
-                'initialPreview' => [],
+                'initialPreview' => isset($fileInfo) ? static::initialPreview($fileInfo) : [],
                 'overwriteInitial' => false,
                 'initialPreviewAsData' => true,
                 'initialPreviewFileType' => 'image',
                 'initialCaption' => $model->$attribute,
                 'preferIconicPreview' => true, // 这将强制缩略图按照以下文件扩展名的图标显示
-                'initialPreviewConfig' => [],
+                'initialPreviewConfig' => isset($fileInfo) ? static::fileInitialPreviewConfig($fileInfo) : [],
                 'previewFileIconSettings' => [ // 配置你的文件扩展名对应的图标
                     'doc' => '<i class="fa fa-file-word-o text-primary"></i>',
                     'xls' => '<i class="fa fa-file-excel-o text-success"></i>',
@@ -232,12 +239,26 @@ class FormHelper
             [
                 'size' => $fileInfo['size'],
                 'caption' => $fileInfo['origin_name'],
-                'url' => Url::to(['image-delete', 'file_key' => '123']),
-                'downloadUrl' => Url::to(['image-download', 'file_key' => '123']),
+                'url' => Url::to(['image-delete', 'file_key' => $fileInfo['file_key']]),
+                'downloadUrl' => Url::to(['image-download', 'file_key' => $fileInfo['file_key']]),
             ],
         ];
     }
 
+    public static function fileInitialPreviewConfig(array $fileInfo)
+    {
+        return [
+            [
+    //            'type' => 'video',
+                'fileType' => $fileInfo['type'],
+                'filename' => $fileInfo['origin_name'] .'.'. $fileInfo['extension'],
+                'caption' => $fileInfo['origin_name'],
+                'size' => $fileInfo['size'],
+                'url' => Url::to(['file-delete', 'file_key' => $fileInfo['file_key']]),
+                'downloadUrl' => Url::to(['file-download', 'file_key' => $fileInfo['file_key']]),
+            ]
+        ];
+    }
 
     /**
      * @param ActiveForm $form
