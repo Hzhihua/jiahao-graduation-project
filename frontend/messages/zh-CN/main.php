@@ -12,7 +12,7 @@ return [
     'Simulation' => '电子仿真模块',
     'Environment' => '设备环境',
     'Upload Works' => '作业提交',
-    'Videos' => '学校资料',
+    'Videos' => '学习资料',
     'Announcement' => '公告详情',
 
     'Communication' => '交流论坛',
