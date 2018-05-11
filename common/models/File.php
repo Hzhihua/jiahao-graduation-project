@@ -157,13 +157,22 @@ class File extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param $key
+     * @param string $key
      * @return int
      */
     public static function getIdByFileKey($key)
     {
         $data = static::find()->select('id')->where(['file_key' => $key])->asArray()->one();
         return (int) $data['id'];
+    }
+
+    /**
+     * @param string $key
+     * @return int
+     */
+    public static function getInfoByFileKey($key)
+    {
+        return static::find()->where(['file_key' => $key])->asArray()->one();
     }
 
 }
