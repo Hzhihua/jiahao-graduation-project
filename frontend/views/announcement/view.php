@@ -5,6 +5,7 @@
  * @Email: cnzhihua@gmail.com
  */
 /* @var array $data */
+use yii\helpers\Url;
 use yii\helpers\Html;
 use frontend\assets\AppAsset;
 
@@ -27,7 +28,7 @@ $this->title = $data['title'];
                 <?= Html::decode($data['content']) ?>
             </div>
         </article>
-
+        附件下载：<a href="<?= Url::to(['file-download', 'file_key' => $data['file']['file_key']])?>"><?= $data['file']['origin_name'] . '.' . $data['file']['extension'] ?></a>
         <hr>
     </div>
 </div>

@@ -8,7 +8,7 @@ use backend\helpers\ColumnsHelper;
 /* @var $searchModel common\models\AnnouncementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = Yii::t('backend', 'Announcements');
+$this->title = Yii::t('backend', '动态管理');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="announcement-index">
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(sprintf('%s%s',
             Yii::t('backend', 'Create'),
-            Yii::t('backend', 'Announcement')
+            Yii::t('backend', '动态管理')
         ), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 

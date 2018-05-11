@@ -105,7 +105,7 @@ class FormHelper
         } elseif ($model->id) {
             $fileInfo = Picture::find()->where(['id' => $model->picture_id])->asArray()->one();
         }
-        $inputId = static::getInputId();
+        $inputId = static::getInputId($attribute);
         $alertMsg = 'Are you sure you want to delete this file?';
         $clientOptions = ArrayHelper::merge([
             'name' => 'picture',
@@ -147,7 +147,7 @@ class FormHelper
      */
     public static function FileUpload(ActiveForm $form, $model, $attribute, array $clientOptions = [])
     {
-        $inputId = static::getInputId();
+        $inputId = static::getInputId($attribute);
         $alertMsg = 'Are you sure you want to delete this file?';
         $clientOptions = ArrayHelper::merge([
             'name' => 'file',
@@ -249,7 +249,7 @@ class FormHelper
      */
     public static function upload(ActiveForm $form, $model, $attribute, array $clientOptions = [])
     {
-        $inputId = static::getInputId();
+        $inputId = static::getInputId($attribute);
         $fileKey = Yii::$app->request->post($attribute);
         $attributeLabels = $model->attributeLabels();
         $html = '<label class="control-label">'. $attributeLabels[$attribute] .'</label>';
@@ -262,13 +262,13 @@ class FormHelper
     /**
      * @return string input id
      */
-    public static function getInputId()
+    public static function getInputId($prefix = '')
     {
-        static $id = '';
-        if (empty($id)) {
-            $id = 'input_' . uniqid();
+        static $id = [];
+        if (!isset($id[$prefix])) {
+            $id[$prefix] = $prefix . '_input_' . uniqid();
         }
-        return $id;
+        return $id[$prefix];
     }
 
 }

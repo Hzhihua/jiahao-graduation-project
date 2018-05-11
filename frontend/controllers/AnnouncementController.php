@@ -7,11 +7,22 @@
 
 namespace frontend\controllers;
 
-use common\models\Announcement;
 use yii\web\Controller;
+use common\models\File;
+use common\models\Announcement;
 
 class AnnouncementController extends Controller
 {
+    public function actions()
+    {
+        return array_merge(parent::actions(), [
+            'file-download' => [
+                'class' => 'hzhihua\actions\FileDownloadAction',
+                'on beforeDownload' => [new File(), 'beforeFileDownload'],
+//                'responseFormat' => 'json',
+            ],
+        ]);
+    }
 
     public function actionIndex()
     {
@@ -21,7 +32,6 @@ class AnnouncementController extends Controller
         ]);
     }
 
-
     /**
      * 根据 id 显示具体的公告内容
      * @param int $pk
@@ -30,7 +40,7 @@ class AnnouncementController extends Controller
     public function actionView($pk)
     {
         $pk = (int)$pk;
-        $data = Announcement::find()->where(['id' => $pk])->with('author', 'picture')->asArray()->one();
+        $data = Announcement::find()->where(['id' => $pk])->with('author', 'file')->asArray()->one();
         return $this->render('view', [
             'data' => $data,
         ]);

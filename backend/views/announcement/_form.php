@@ -21,6 +21,8 @@ use backend\helpers\FormHelper;
 
     <?= FormHelper::ImageUpload($form, $model, 'picture_id') ?>
 
+    <?= FormHelper::FileUpload($form, $model, 'file_id') ?>
+
 <!--    --><?//= \backend\actions\UploadWidget::widget([])?>
 
     <?= $form->field($model, 'description')->textInput(['maxlength' => true]) ?>

@@ -14,7 +14,7 @@ use yii\helpers\Html;
 //$this->registerJs("CKEDITOR.plugins.addExternal('image2', '/gp/backend/web/ckeditor_plugins/image2/plugin.js', '');");
 ?>
 
-<? $model->$attribute = Html::decode($model->$attribute) ?>
+<?php $model->$attribute = Html::decode($model->$attribute) ?>
 <?= $form->field($model, $attribute)->widget('dosamigos\ckeditor\CKEditor', [
 //    'options' => ['rows' => 6],
     'preset' => 'custom', /* @see \dosamigos\ckeditor\CKEditorTrait */

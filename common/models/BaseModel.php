@@ -48,6 +48,15 @@ class BaseModel extends ActiveRecord
 
     }
 
+    public function behaviors()
+    {
+        return array_merge(parent::behaviors(), [
+            [
+                'class' => 'yii\behaviors\TimestampBehavior',
+            ],
+        ]);
+    }
+
     /**
      * @inheritdoc
      */

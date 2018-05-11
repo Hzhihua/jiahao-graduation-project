@@ -2,7 +2,6 @@
 
 namespace backend\controllers;
 
-use common\models\Picture;
 use Yii;
 use common\models\Announcement;
 use common\models\AnnouncementSearch;
@@ -10,6 +9,8 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\File;
+use common\models\Picture;
 
 /**
  * AnnouncementController implements the CRUD actions for Announcement model.
@@ -49,20 +50,22 @@ class AnnouncementController extends Controller
     public function actions()
     {
         return [
-            'image-upload' => [
+            'image-upload' => [ // 预览图上传
                 'class' => 'hzhihua\actions\FileUploadAction',
                 'seeDirectory' => Yii::$app->params['baseUrl'],
                 'uploadDirectory' => Yii::$app->params['baseDirectory'],
-                'on beforeUpload' => [new Picture(), 'beforeImageUpload'],
+                'deleteAction' => 'image-delete',
+                'downloadAction' => 'image-download',
+                // 'on beforeUpload' => [new Picture(), 'beforeImageUpload'],
                 'on afterUpload' => [new Picture(), 'afterImageUpload'],
 //                'responseFormat' => 'json',
             ],
-            'file-delete' => [
+            'image-delete' => [ // 预览图删除
                 'class' => 'hzhihua\actions\FileDeleteAction',
                 'on beforeDelete' => [new Picture(), 'beforeImageDelete'],
                 'on afterDelete' => [new Picture(), 'afterImageDelete'],
             ],
-            'file-download' => [
+            'image-download' => [ // 预览图下载
                 'class' => 'hzhihua\actions\FileDownloadAction',
                 'on beforeDownload' => [new Picture(), 'beforeImageDownload'],
 //                'responseFormat' => 'json',
@@ -71,6 +74,27 @@ class AnnouncementController extends Controller
                 'class' => 'hzhihua\actions\FileUploadAction',
                 'attribute' => 'upload',
                 'on afterUpload' => [new Picture(), 'afterImageUploadCKeditor'],
+            ],
+            'file-upload' => [ // 附件上传
+                'class' => 'hzhihua\actions\FileUploadAction',
+                'attribute' => 'file',
+                'deleteAction' => 'file-delete',
+                'downloadAction' => 'file-download',
+                'seeDirectory' => Yii::$app->params['baseUrl'],
+                'uploadDirectory' => Yii::$app->params['baseDirectory'],
+                // 'on beforeUpload' => [new File(), 'beforeFileUpload'],
+                'on afterUpload' => [new File(), 'afterFileUpload'],
+//                'responseFormat' => 'json',
+            ],
+            'file-delete' => [ // 附件删除
+                'class' => 'hzhihua\actions\FileDeleteAction',
+                'on beforeDelete' => [new File(), 'beforeFileDelete'],
+                'on afterDelete' => [new File(), 'afterfileDelete'],
+            ],
+            'file-download' => [ // 附件下载
+                'class' => 'hzhihua\actions\FileDownloadAction',
+                'on beforeDownload' => [new File(), 'beforeFileDownload'],
+//                'responseFormat' => 'json',
             ],
         ];
     }
@@ -114,8 +138,10 @@ class AnnouncementController extends Controller
 
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            $file_id = Picture::getIdByFileKey($post['picture_id']);
-            $_POST['Announcement']['picture_id'] = $file_id;
+            $picture_id = Picture::getIdByFileKey($post['picture_id']);
+            $file_id = File::getIdByFileKey($post['file_id']);
+            $_POST['Announcement']['picture_id'] = $picture_id;
+            $_POST['Announcement']['file_id'] = $file_id;
             if ($model->load($_POST) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }
@@ -139,8 +165,10 @@ class AnnouncementController extends Controller
 
         if (Yii::$app->request->isPost) {
             $post = Yii::$app->request->post();
-            $file_id = Picture::getIdByFileKey($post['picture_id']);
-            $_POST['Announcement']['picture_id'] = $file_id;
+            $picture_id = Picture::getIdByFileKey($post['picture_id']);
+            $file_id = File::getIdByFileKey($post['file_id']);
+            $_POST['Announcement']['picture_id'] = $picture_id;
+            $_POST['Announcement']['file_id'] = $file_id;
             if ($model->load($_POST) && $model->save()) {
                 return $this->redirect(['view', 'id' => $model->id]);
             }

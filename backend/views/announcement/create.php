@@ -8,9 +8,9 @@ use yii\helpers\Html;
 
 $this->title = sprintf('%s%s',
     Yii::t('backend', 'Create'),
-    Yii::t('backend', 'Announcement')
+    Yii::t('backend', '课程动态')
 );
-$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', 'Announcements'), 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => Yii::t('backend', '动态管理'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="announcement-create">

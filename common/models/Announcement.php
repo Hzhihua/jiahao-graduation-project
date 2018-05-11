@@ -37,7 +37,7 @@ class Announcement extends BaseModel
         return [
             [['title', 'author_id', 'picture_id', 'description', 'content'], 'required'],
             [['content'], 'string', 'max' => 65535],
-            [['picture_id', 'author_id'], 'integer'],
+            [['picture_id', 'author_id', 'file_id'], 'integer'],
             [['created_at', 'updated_at'], 'integer'],
             [['title', 'description'], 'string', 'max' => 255],
         ];
@@ -53,6 +53,7 @@ class Announcement extends BaseModel
                 'title',
                 'author_id',
                 'picture_id',
+                'file_id',
                 'description',
                 'content',
             ],
@@ -60,6 +61,7 @@ class Announcement extends BaseModel
                 'title',
                 'author_id',
                 'picture_id',
+                'file_id',
                 'description',
                 'content',
             ],
@@ -75,8 +77,11 @@ class Announcement extends BaseModel
             'id' => 'ID',
             'title' => Yii::t('common', 'Title'),
             'author_id' => Yii::t('common', 'Author'),
-            'picture_id' => Yii::t('common', 'Picture'),
-            'description' => Yii::t('common', 'Description'),
+            // 'picture_id' => Yii::t('common', 'Picture'),
+            'picture_id' => '预览图',
+            // 'description' => Yii::t('common', 'Description'),
+            'file_id' => '附件',
+            'description' => '动态简介',
             'content' => Yii::t('common', 'Content'),
             'created_at' => Yii::t('common', 'Created At'),
             'updated_at' => Yii::t('common', 'Updated At'),
@@ -169,6 +174,16 @@ class Announcement extends BaseModel
     {
         // id 是 picture 表的 id
         return $this->hasOne(Picture::class, ['id' => 'picture_id']);
+    }
+
+    /**
+     * 与 file 表一对一关系
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFile()
+    {
+        // id 是 picture 表的 id
+        return $this->hasOne(File::class, ['id' => 'file_id']);
     }
 
 }
