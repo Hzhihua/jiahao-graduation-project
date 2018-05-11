@@ -28,7 +28,10 @@ $this->title = $data['title'];
                 <?= Html::decode($data['content']) ?>
             </div>
         </article>
-        附件下载：<a href="<?= Url::to(['file-download', 'file_key' => $data['file']['file_key']])?>"><?= $data['file']['origin_name'] . '.' . $data['file']['extension'] ?></a>
+        附件下载：
+        <?php if($data['file']): ?>
+            <a href="<?= Url::to(['file-download', 'file_key' => $data['file']['file_key']])?>"><?= $data['file']['origin_name'] . '.' . $data['file']['extension'] ?></a>
+        <?php endif; ?>
         <hr>
     </div>
 </div>

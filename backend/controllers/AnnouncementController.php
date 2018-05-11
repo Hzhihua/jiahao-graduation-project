@@ -89,7 +89,7 @@ class AnnouncementController extends Controller
             'file-delete' => [ // 附件删除
                 'class' => 'hzhihua\actions\FileDeleteAction',
                 'on beforeDelete' => [new File(), 'beforeFileDelete'],
-                'on afterDelete' => [new File(), 'afterfileDelete'],
+                // 'on afterDelete' => [new File(), 'afterFileDelete'],
             ],
             'file-download' => [ // 附件下载
                 'class' => 'hzhihua\actions\FileDownloadAction',

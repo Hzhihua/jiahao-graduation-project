@@ -3,6 +3,7 @@
 namespace common\models;
 
 use Yii;
+use yii\web\JsExpression;
 use hzhihua\actions\Event;
 use hzhihua\actions\UploadedFile;
 
@@ -90,15 +91,33 @@ class File extends \yii\db\ActiveRecord
 //        $event->sender->initialPreview = [
 //            Yii::$app->params['baseUrl'] . $event->sender->newDirectory . '/' . $event->sender->newName . '.' . $event->file->extension,
 //        ];
-        $event->sender->initialPreviewConfig = [[
-//            'type' => 'video',
-            'fileType' => $event->file->type,
-            'filename' => $event->file->name,
-            'caption' => $event->file->baseName,
-            'size' => $event->file->size,
-            'downloadUrl' => $event->sender->getDownloadUrl(), // download url
-            'url' => $event->sender->getDeleteUrl(), // delete url
-        ]];
+        $event->sender->setResponseBody([
+            'initialPreviewConfig' => [
+                // 'type' => 'video',
+                'fileType' => $event->file->type,
+                'filename' => $event->file->name,
+                'caption' => $event->file->baseName,
+                'size' => $event->file->size,
+                'downloadUrl' => $event->sender->getDownloadUrl(), // download url
+                'url' => $event->sender->getDeleteUrl(), // delete url
+            ],
+            'previewFileIconSettings' => [ // 配置你的文件扩展名对应的图标
+                    'doc' => '<i class="fa fa-file-word-o text-primary"></i>',
+                    'xls' => '<i class="fa fa-file-excel-o text-success"></i>',
+                    'ppt' => '<i class="fa fa-file-powerpoint-o text-danger"></i>',
+                    'pdf' => '<i class="fa fa-file-pdf-o text-danger"></i>',
+                    'zip' => '<i class="fa fa-file-archive-o text-muted"></i>',
+                    'htm' => '<i class="fa fa-file-code-o text-info"></i>',
+                    'txt' => '<i class="fa fa-file-text-o text-info"></i>',
+                    'mov' => '<i class="fa fa-file-movie-o text-warning"></i>',
+                    'mp3' => '<i class="fa fa-file-audio-o text-warning"></i>',
+                    // 以下这些文件类型的注释未配置扩展名确定逻辑（键值本身会被用作扩展名）
+                    // has been configured (the keys itself will be used as extensions)
+                    'jpg' => '<i class="fa fa-file-photo-o text-danger"></i>',
+                    'gif' => '<i class="fa fa-file-photo-o text-muted"></i>',
+                    'png' => '<i class="fa fa-file-photo-o text-primary"></i>'
+            ],
+        ]);
 
         $event->isValid = static::validate() && static::insert();
 
