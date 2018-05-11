@@ -92,6 +92,7 @@ class File extends \yii\db\ActiveRecord
 //            Yii::$app->params['baseUrl'] . $event->sender->newDirectory . '/' . $event->sender->newName . '.' . $event->file->extension,
 //        ];
         $event->sender->setResponseBody([
+            'file_key' => $event->sender->fileKey,
             'initialPreviewConfig' => [
                 // 'type' => 'video',
                 'fileType' => $event->file->type,
